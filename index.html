@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>创保网APP</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body { font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; background:#F5F6FA; overflow-x:hidden; }
+.app { width:100%; max-width:430px; margin:0 auto; min-height:100vh; position:relative; overflow:hidden; background:#F5F6FA; }
+
+/* Page transitions */
+.page { position:absolute; top:0; left:0; width:100%; min-height:100vh; transition:transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.35s; will-change:transform,opacity; }
+.page.active { transform:translateX(0); opacity:1; z-index:2; }
+.page.left { transform:translateX(-35%); opacity:0.4; z-index:1; }
+.page.right { transform:translateX(100%); opacity:0.8; z-index:3; }
+.page.hidden { display:none; }
+
+/* ===== HOME PAGE ===== */
+.home-page { background:#F5F6FA; }
+.status-bar { display:flex; justify-content:space-between; align-items:center; padding:8px 16px; background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8); color:#fff; font-size:13px; font-weight:600; }
+.header { background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8); padding:0 16px; }
+.search-row { display:flex; align-items:center; gap:10px; padding-bottom:12px; }
+.avatar { width:44px; height:44px; border-radius:22px; background:rgba(255,255,255,.25); display:flex; align-items:center; justify-content:center; flex-shrink:0; position:relative; }
+.avatar-badge { position:absolute; bottom:-4px; left:50%; transform:translateX(-50%); background:#FF6B35; color:#fff; font-size:8px; padding:1px 4px; border-radius:6px; white-space:nowrap; line-height:12px; }
+.search-bar { flex:1; background:#fff; border-radius:22px; display:flex; align-items:center; padding:8px 14px; gap:8px; }
+.search-bar span { color:#B0B8C8; font-size:14px; flex:1; }
+.search-ai { width:28px; height:28px; border-radius:14px; background:linear-gradient(135deg,#67C3F3,#5B86E5); display:flex; align-items:center; justify-content:center; }
+.header-icons { display:flex; gap:6px; }
+.header-icon { width:36px; height:36px; border-radius:18px; background:rgba(255,255,255,.2); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.quick-nav { display:flex; justify-content:space-around; padding:14px 8px 18px; background:linear-gradient(180deg,#357ABD 0%,#4A90E2 40%,#F5F6FA 100%); }
+.quick-nav-item { display:flex; flex-direction:column; align-items:center; gap:6px; cursor:pointer; }
+.quick-nav-icon { width:48px; height:48px; border-radius:14px; background:rgba(255,255,255,.95); display:flex; align-items:center; justify-content:center; box-shadow:0 2px 8px rgba(0,0,0,.08); }
+.quick-nav-label { font-size:12px; color:#fff; font-weight:500; text-shadow:0 1px 2px rgba(0,0,0,.1); }
+.banner { margin:0 16px; border-radius:14px; overflow:hidden; background:linear-gradient(135deg,#3366CC,#5588EE); height:100px; display:flex; align-items:center; padding:0 20px; margin-top:-8px; }
+.banner-tag { background:linear-gradient(135deg,#FF6B35,#FF8F5E); color:#fff; font-size:10px; padding:3px 8px; border-radius:4px; font-weight:600; margin-bottom:6px; display:inline-block; }
+.banner-title { color:#fff; font-size:20px; font-weight:700; letter-spacing:1px; }
+.banner-sub { color:rgba(255,255,255,.85); font-size:12px; margin-top:4px; }
+.banner-highlight { color:#FFD700; font-weight:700; }
+.banner-mascot { width:80px; height:80px; border-radius:40px; background:rgba(255,255,255,.15); display:flex; align-items:center; justify-content:center; font-size:36px; }
+.grid-section { background:#fff; margin:12px 16px; border-radius:16px; padding:18px 12px 12px; }
+.grid-row { display:flex; justify-content:space-around; margin-bottom:16px; }
+.grid-row:last-child { margin-bottom:0; }
+.grid-item { display:flex; flex-direction:column; align-items:center; gap:6px; width:64px; cursor:pointer; }
+.grid-icon { width:44px; height:44px; border-radius:12px; display:flex; align-items:center; justify-content:center; position:relative; background:#EBF3FF; }
+.grid-label { font-size:12px; color:#333; font-weight:500; }
+.new-badge { position:absolute; top:-4px; right:-4px; background:#FF4757; color:#fff; font-size:8px; padding:1px 4px; border-radius:6px; font-weight:700; }
+.tools-row { display:flex; gap:10px; padding:0 16px; overflow-x:auto; scrollbar-width:none; }
+.tools-row::-webkit-scrollbar { display:none; }
+.tool-card { flex-shrink:0; border-radius:14px; padding:12px 16px; display:flex; align-items:center; gap:10px; cursor:pointer; min-width:110px; }
+
+/* ===== AGENT SECTION (New from screenshot) ===== */
+.agent-section { background:#fff; margin:12px 16px; border-radius:16px; padding:0; overflow:hidden; }
+.agent-top { background:linear-gradient(135deg,#EBF3FF,#F0F4FF); padding:16px; display:flex; align-items:center; justify-content:space-between; position:relative; }
+.agent-mascot-area { display:flex; align-items:center; gap:10px; flex:1; }
+.agent-mascot { width:64px; height:64px; display:flex; align-items:center; justify-content:center; font-size:48px; flex-shrink:0; }
+.agent-greeting { flex:1; height:36px; background:linear-gradient(90deg,#FFE5CC,#FFD4B0); border-radius:18px; opacity:0.6; }
+.task-btn { background:linear-gradient(135deg,#3B7FFF,#5B9FFF); color:#fff; padding:10px 16px; border-radius:12px 16px 16px 0; display:flex; align-items:center; gap:6px; font-size:14px; font-weight:600; cursor:pointer; position:relative; white-space:nowrap; }
+.task-badge { position:absolute; top:-8px; right:-8px; background:#FF4757; color:#fff; width:24px; height:24px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; border:2px solid #fff; }
+.agent-tabs { display:flex; padding:0 16px; border-bottom:1px solid #F0F2F5; }
+.agent-tab { padding:14px 0; margin-right:28px; font-size:15px; color:#8A95A8; font-weight:500; cursor:pointer; position:relative; white-space:nowrap; }
+.agent-tab.active { color:#1A1A2E; font-weight:700; }
+.agent-tab.active::after { content:''; position:absolute; bottom:0; left:50%; transform:translateX(-50%); width:24px; height:3px; background:#3B7FFF; border-radius:2px; }
+.agent-content { padding:16px; }
+.agent-card { background:#F8FAFE; border-radius:14px; padding:16px; }
+.agent-card-header { display:flex; align-items:center; gap:10px; margin-bottom:14px; }
+.agent-card-icon { width:36px; height:36px; border-radius:18px; background:#FFF0E8; display:flex; align-items:center; justify-content:center; }
+.agent-card-title { font-size:15px; font-weight:600; color:#1A1A2E; }
+.agent-card-tag { font-size:11px; color:#FF6B35; background:#FFF0E8; padding:2px 8px; border-radius:4px; font-weight:500; margin-left:8px; }
+.agent-card-body { display:flex; align-items:center; justify-content:space-between; }
+.agent-card-text h3 { font-size:15px; color:#333; font-weight:600; margin-bottom:6px; }
+.agent-card-text p { font-size:13px; color:#8A95A8; }
+.remind-btn { border:1.5px solid #3B7FFF; color:#3B7FFF; background:transparent; padding:8px 20px; border-radius:20px; font-size:14px; font-weight:600; cursor:pointer; white-space:nowrap; }
+.agent-dots { display:flex; justify-content:center; gap:6px; padding:12px 0 4px; }
+.agent-dot { width:8px; height:8px; border-radius:4px; background:#D0D5DD; transition:all .3s; }
+.agent-dot.active { width:20px; background:#3B7FFF; }
+
+/* Activity Section */
+.activity-section { background:#fff; margin:12px 16px 90px; border-radius:16px; padding:20px 16px; }
+.activity-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+.activity-title { font-size:18px; font-weight:700; color:#1A1A2E; }
+.more-btn { font-size:13px; color:#999; cursor:pointer; }
+.activity-cards { display:flex; gap:12px; }
+.activity-card { flex:1; border-radius:12px; padding:14px; cursor:pointer; }
+.activity-badge { display:inline-block; background:#FF4757; color:#fff; font-size:10px; padding:2px 8px; border-radius:4px; font-weight:600; margin-bottom:8px; }
+
+/* Tab Bar */
+.tab-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; background:#fff; display:flex; justify-content:space-around; padding:8px 0 20px; border-top:1px solid #F0F0F0; z-index:100; box-shadow:0 -2px 10px rgba(0,0,0,.05); }
+.tab-item { display:flex; flex-direction:column; align-items:center; gap:2px; cursor:pointer; min-width:50px; }
+.tab-label { font-size:11px; font-weight:500; }
+
+/* ===== AI MARKETING PAGE ===== */
+.ai-page { background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 10%,#E5DDF5 25%,#EDE5F5 40%,#F3EFF8 55%,#F5F6FA 75%); }
+.ai-nav { display:flex; align-items:center; justify-content:space-between; padding:4px 16px 16px; }
+.ai-back { display:flex; align-items:center; gap:6px; cursor:pointer; }
+.ai-back span { font-size:18px; font-weight:700; color:#1A1A2E; }
+.ai-menu { width:40px; height:40px; border-radius:12px; background:rgba(255,255,255,.65); backdrop-filter:blur(10px); display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.ai-main-card { margin:0 16px; background:rgba(255,255,255,.82); backdrop-filter:blur(20px); border-radius:22px; padding:24px 20px 20px; box-shadow:0 4px 30px rgba(100,120,180,.08); }
+.ai-greeting h2 { font-size:21px; font-weight:700; color:#1A1A2E; }
+.ai-greeting p { font-size:14px; color:#5A6580; margin-top:8px; line-height:1.65; }
+
+/* Scrollable tabs */
+.ai-tabs-scroll { overflow-x:auto; scrollbar-width:none; margin:22px -20px 20px; padding:0 20px; }
+.ai-tabs-scroll::-webkit-scrollbar { display:none; }
+.ai-tabs { display:flex; gap:6px; width:max-content; }
+.ai-tab { display:flex; flex-direction:column; align-items:center; gap:8px; cursor:pointer; padding:14px 10px 10px; border-radius:16px; border:1.5px solid transparent; transition:all .25s; min-width:76px; flex-shrink:0; }
+.ai-tab.active { background:#fff; border-color:#E0E7FF; box-shadow:0 2px 14px rgba(59,127,255,.1); }
+.ai-tab .label { font-size:12px; font-weight:500; color:#7B8CA8; white-space:nowrap; }
+.ai-tab.active .label { font-weight:600; color:#3B7FFF; }
+.ai-divider { height:1px; background:#EFF1F5; margin:0 -20px 20px; }
+.ai-stats-text { text-align:center; margin-bottom:18px; font-size:14px; color:#5A6580; }
+.ai-stats-text .hl { color:#3B7FFF; font-weight:700; font-size:19px; margin:0 1px; }
+
+/* Clickable stats row */
+.ai-stats-row { display:flex; justify-content:space-around; align-items:center; margin-bottom:8px; }
+.ai-stat { text-align:center; min-width:40px; cursor:pointer; padding:8px 4px; border-radius:10px; transition:all .2s; position:relative; }
+.ai-stat:hover { background:#F0F5FF; }
+.ai-stat.active::after { content:''; position:absolute; bottom:2px; left:50%; transform:translateX(-50%); width:16px; height:3px; background:#3B7FFF; border-radius:2px; }
+.ai-stat .num { font-size:24px; font-weight:700; color:#1A1A2E; transition:color .2s; }
+.ai-stat.active .num { color:#3B7FFF; }
+.ai-stat .lbl { font-size:11px; color:#8A95A8; margin-top:3px; }
+.stat-sep { width:1px; height:30px; background:#E8ECF0; flex-shrink:0; }
+
+/* Swipeable cards */
+.cards-container { position:relative; height:235px; margin-bottom:0; overflow:hidden; touch-action:pan-y; }
+.cards-track { display:flex; transition:transform .4s cubic-bezier(.25,.46,.45,.94); will-change:transform; }
+.card-slide { width:100%; flex-shrink:0; position:relative; height:235px; }
+.customer-card { position:absolute; background:#fff; border-radius:16px; padding:16px; box-shadow:0 4px 16px rgba(0,0,0,.07); transition:all .35s; }
+.customer-card.center { width:185px; top:0; left:50%; transform:translateX(-50%); box-shadow:0 8px 32px rgba(59,127,255,.18); z-index:3; padding:18px; }
+.customer-card.side-left { width:150px; top:20px; left:2%; transform:rotate(-8deg); transform-origin:bottom right; z-index:1; opacity:.85; }
+.customer-card.side-right { width:150px; top:20px; right:2%; left:auto; transform:rotate(7deg); transform-origin:bottom left; z-index:1; opacity:.85; }
+.card-tag { display:inline-block; background:linear-gradient(135deg,#FF5A3C,#FF4757); color:#fff; font-size:10px; padding:3px 8px; border-radius:5px; font-weight:600; margin-bottom:10px; }
+.card-body { font-size:14px; font-weight:700; color:#1A1A2E; line-height:1.55; margin-bottom:16px; min-height:56px; }
+.center .card-body { font-size:16px; min-height:75px; }
+.card-quote { position:absolute; bottom:42px; right:14px; font-size:36px; color:#E8ECF0; font-weight:700; line-height:1; font-family:Georgia,serif; }
+.side-left .card-quote, .side-right .card-quote { bottom:36px; }
+.card-user { display:flex; align-items:center; gap:8px; border-top:1px solid #F0F2F5; padding-top:10px; }
+.card-avatar { width:28px; height:28px; border-radius:14px; background:linear-gradient(135deg,#FFD4A8,#FFB878); display:flex; align-items:center; justify-content:center; }
+.card-name { font-size:13px; color:#5A6580; font-weight:500; }
+
+/* Swipe indicator dots */
+.swipe-dots { display:flex; justify-content:center; gap:5px; padding:10px 0 0; }
+.swipe-dot { width:6px; height:6px; border-radius:3px; background:#D0D5DD; transition:all .3s; }
+.swipe-dot.active { width:18px; background:#3B7FFF; }
+
+.ai-cta { padding:26px 36px 20px; text-align:center; }
+.ai-cta-btn { background:linear-gradient(135deg,#56B4FF,#3B7FFF); color:#fff; font-size:17px; font-weight:600; padding:16px 40px; border-radius:50px; cursor:pointer; display:flex; align-items:center; gap:8px; box-shadow:0 8px 28px rgba(59,127,255,.35); justify-content:center; border:none; width:100%; }
+.ai-bottom-bar { position:fixed; bottom:0; left:50%; transform:translateX(-50%); width:100%; max-width:430px; padding:12px 20px 0; background:linear-gradient(180deg,transparent,rgba(245,246,250,.97) 30%); z-index:50; }
+.ai-input-bar { background:rgba(255,255,255,.92); backdrop-filter:blur(20px); border-radius:30px; display:flex; align-items:center; justify-content:space-between; padding:10px 24px; box-shadow:0 4px 24px rgba(0,0,0,.08); }
+.ai-bar-btn { width:42px; height:42px; border-radius:12px; background:#EBF3FF; display:flex; align-items:center; justify-content:center; cursor:pointer; }
+.ai-mic-btn { width:60px; height:60px; border-radius:30px; background:linear-gradient(180deg,#B0D8FF,#5B9FFF 35%,#3B7FFF 60%,#7C6BF0); display:flex; align-items:center; justify-content:center; cursor:pointer; box-shadow:0 6px 20px rgba(59,127,255,.35); position:relative; }
+.ai-mic-inner { position:absolute; inset:3.5px; border-radius:27px; background:linear-gradient(180deg,#C4E2FF,#7BB8FF 30%,#6B8FFF 60%,#9B8BF4); }
+.ai-disclaimer { text-align:center; margin-top:10px; font-size:11px; color:#B0B8C8; padding-bottom:4px; }
+.home-indicator { display:flex; justify-content:center; padding:8px 0 6px; }
+.home-indicator div { width:134px; height:5px; border-radius:3px; background:#1A1A2E; }
+</style>
+</head>
+<body>
+<div class="app" id="app">
+
+<!-- ==================== HOME PAGE ==================== -->
+<div class="page active" id="homePage">
+<div class="home-page">
+  <!-- Status Bar -->
+  <div class="status-bar">
+    <span>09:16</span>
+    <div style="display:flex;align-items:center;gap:4px">
+      <span style="font-size:10px">312 K/s</span>
+      <span>📶</span>
+      <span style="font-size:12px;background:rgba(255,255,255,.2);padding:1px 6px;border-radius:8px">59</span>
+    </div>
+  </div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="search-row">
+      <div class="avatar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="white" stroke-width="1.5"/><path d="M5 20c0-3.5 3-6.5 7-6.5s7 3 7 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <div class="avatar-badge">成为代理人</div>
+      </div>
+      <div class="search-bar">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#C0C8D8" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="#C0C8D8" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>学平险</span>
+        <div class="search-ai">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="7" r="1.5" fill="white"/><circle cx="10" cy="7" r="1.5" fill="white"/><path d="M6 10.5c1 1 3 1 4 0" stroke="white" stroke-width="1" stroke-linecap="round"/></svg>
+        </div>
+      </div>
+      <div class="header-icons">
+        <div class="header-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="white" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        <div class="header-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M10 3a5 5 0 015 5v3l2 2H3l2-2V8a5 5 0 015-5z" stroke="white" stroke-width="1.5"/><path d="M8 15a2 2 0 004 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="header-icon"><svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.5"/><path d="M7 9h6M7 12h4" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Quick Nav -->
+  <div class="quick-nav">
+    <div class="quick-nav-item"><div class="quick-nav-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><path d="M6 16h16M8 12l2-5h8l2 5M7 16v2.5h3.5V16M17.5 16v2.5H21V16M7 12h14v4H7z" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="quick-nav-label">车险投保</span></div>
+    <div class="quick-nav-item"><div class="quick-nav-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#3B7FFF" stroke-width="1.5"/><circle cx="14" cy="14" r="4" stroke="#3B7FFF" stroke-width="1.5"/><path d="M14 4v3M14 21v3M4 14h3M21 14h3" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="quick-nav-label">朋友圈助手</span></div>
+    <div class="quick-nav-item"><div class="quick-nav-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="5" y="3" width="18" height="22" rx="2" stroke="#3B7FFF" stroke-width="1.5"/><text x="14" y="18" text-anchor="middle" fill="#3B7FFF" font-size="12" font-weight="700">¥</text></svg></div><span class="quick-nav-label">理赔中心</span></div>
+    <div class="quick-nav-item"><div class="quick-nav-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="16" rx="3" stroke="#3B7FFF" stroke-width="1.5"/><path d="M12 11l5 3-5 3V11z" fill="#3B7FFF"/></svg></div><span class="quick-nav-label">数字营销</span></div>
+    <div class="quick-nav-item"><div class="quick-nav-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none"><rect x="5" y="3" width="15" height="20" rx="2" stroke="#3B7FFF" stroke-width="1.5"/><path d="M9 8h7M9 12h7M9 16h4" stroke="#3B7FFF" stroke-width="1.2" stroke-linecap="round"/><circle cx="20" cy="20" r="4" stroke="#3B7FFF" stroke-width="1.5"/><path d="M23 23l2 2" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="quick-nav-label">保单查询</span></div>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div style="flex:1">
+      <div class="banner-tag">创展数字营销</div>
+      <div class="banner-title">首届万粉创星会</div>
+      <div class="banner-sub">迎战月度挑战赛，冲击全国<span class="banner-highlight">创星榜</span></div>
+    </div>
+    <div class="banner-mascot">🤖</div>
+  </div>
+
+  <!-- Grid Section -->
+  <div class="grid-section">
+    <div class="grid-row">
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="10" cy="10" r="5" stroke="#3B7FFF" stroke-width="2"/><path d="M3 22c0-4 3-7 7-7s7 3 7 7" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/><path d="M20 8v6M17 11h6" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/></svg></div><span class="grid-label">加入创保网</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="6" width="20" height="14" rx="2" stroke="#3B7FFF" stroke-width="2"/><path d="M3 10h20" stroke="#3B7FFF" stroke-width="2"/><text x="13" y="20" text-anchor="middle" fill="#3B7FFF" font-size="10" font-weight="700">¥</text></svg></div><span class="grid-label">热门产品</span></div>
+      <div class="grid-item" onclick="navigateTo('aiPage')"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="3" width="20" height="20" rx="5" fill="#3B7FFF"/><text x="13" y="17" text-anchor="middle" fill="white" font-size="10" font-weight="800">智</text></svg><span class="new-badge">NEW</span></div><span class="grid-label">智能保顾</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="10" width="18" height="12" rx="2" stroke="#3B7FFF" stroke-width="2"/><path d="M13 10v12M4 14h18" stroke="#3B7FFF" stroke-width="2"/><path d="M13 10c-2-3-5-3-5-1s3 1 5 1c2 0 5 1 5-1s-3-2-5 1" stroke="#3B7FFF" stroke-width="1.5" fill="none"/></svg></div><span class="grid-label">客户礼包</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="9" r="4" stroke="#3B7FFF" stroke-width="2"/><path d="M6 22c0-4 3-7 7-7s7 3 7 7" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/></svg></div><span class="grid-label">增员助手</span></div>
+    </div>
+    <div class="grid-row">
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><path d="M13 22s-7-5-7-10c0-3 2-5 4.5-5 1.5 0 2.5 1 2.5 1s1-1 2.5-1c2.5 0 4.5 2 4.5 5 0 5-7 10-7 10z" stroke="#3B7FFF" stroke-width="2" fill="none"/></svg></div><span class="grid-label">涨粉助手</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="8" width="18" height="12" rx="2" stroke="#3B7FFF" stroke-width="2"/><path d="M4 12h18" stroke="#3B7FFF" stroke-width="2"/><text x="13" y="21" text-anchor="middle" fill="#3B7FFF" font-size="9" font-weight="700">¥</text></svg></div><span class="grid-label">商机管理</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="3" y="5" width="20" height="16" rx="2" stroke="#3B7FFF" stroke-width="2"/><line x1="7" y1="10" x2="12" y2="10" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/><line x1="7" y1="14" x2="19" y2="14" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/></svg></div><span class="grid-label">非车潜客</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="4" fill="#3B7FFF"/><text x="13" y="17" text-anchor="middle" fill="white" font-size="9" font-weight="800">VS</text></svg></div><span class="grid-label">比价线索</span></div>
+      <div class="grid-item"><div class="grid-icon"><svg width="26" height="26" viewBox="0 0 26 26" fill="none"><circle cx="8" cy="10" r="2.5" fill="#3B7FFF"/><circle cx="18" cy="10" r="2.5" fill="#3B7FFF"/><circle cx="8" cy="18" r="2.5" fill="#3B7FFF"/><circle cx="18" cy="18" r="2.5" fill="#3B7FFF"/></svg></div><span class="grid-label">更多</span></div>
+    </div>
+  </div>
+
+  <!-- Tools Row -->
+  <div class="tools-row">
+    <div class="tool-card" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9)">
+      <div><span style="font-size:14px;font-weight:700;color:#2E7D32">快签到</span><br><span style="background:#4CAF50;color:#fff;font-size:8px;padding:1px 4px;border-radius:4px">GO</span></div>
+      <div style="width:36px;height:36px;border-radius:18px;background:rgba(76,175,80,.2);display:flex;align-items:center;justify-content:center;font-size:20px">🐵</div>
+    </div>
+    <div class="tool-card" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:13px;font-weight:600;color:#333">AI跟拍</div><div style="font-size:10px;color:#999">精选模板</div></div><div style="font-size:22px">📸</div></div>
+    <div class="tool-card" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:13px;font-weight:600;color:#333">数字营销</div><div style="font-size:10px;color:#999">创星计划</div></div><div style="font-size:22px">🎬</div></div>
+    <div class="tool-card" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:13px;font-weight:600;color:#333">智能海报</div><div style="font-size:10px;color:#999">一键生成</div></div><div style="font-size:22px">🎨</div></div>
+  </div>
+
+  <!-- NEW: Agent Section (from screenshot) -->
+  <div class="agent-section">
+    <div class="agent-top">
+      <div class="agent-mascot-area">
+        <div class="agent-mascot">🐨</div>
+        <div class="agent-greeting"></div>
+      </div>
+      <div class="task-btn" style="margin-left:12px">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 015 5v2.5l1.5 1.5H2.5L4 9.5V7a5 5 0 015-5z" stroke="white" stroke-width="1.5"/><path d="M7 13a2 2 0 004 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+        任务待办 ›
+        <div class="task-badge">51</div>
+      </div>
+    </div>
+    <!-- Agent Tabs -->
+    <div class="agent-tabs" id="agentTabs">
+      <div class="agent-tab active" onclick="switchAgentTab(0)">小微续保</div>
+      <div class="agent-tab" onclick="switchAgentTab(1)">非车续保</div>
+      <div class="agent-tab" onclick="switchAgentTab(2)">潜客资源</div>
+      <div class="agent-tab" onclick="switchAgentTab(3)">潜客挖掘</div>
+    </div>
+    <!-- Agent Content -->
+    <div class="agent-content" id="agentContent">
+      <div class="agent-card">
+        <div class="agent-card-header">
+          <div class="agent-card-icon">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="3" stroke="#FF6B35" stroke-width="1.5"/><path d="M7 7h6M7 10h6M7 13h4" stroke="#FF6B35" stroke-width="1.2" stroke-linecap="round"/></svg>
+          </div>
+          <span class="agent-card-title">团队小微脱保续回</span>
+          <span class="agent-card-tag">3月22日到期</span>
+        </div>
+        <div class="agent-card-body">
+          <div class="agent-card-text">
+            <h3>成员王武春的续保单已经脱保啦</h3>
+            <p>立即前往完成任务</p>
+          </div>
+          <button class="remind-btn">提醒成员</button>
+        </div>
+      </div>
+      <div class="agent-dots">
+        <div class="agent-dot"></div>
+        <div class="agent-dot active"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Activity Section -->
+  <div class="activity-section">
+    <div class="activity-header">
+      <span class="activity-title">活动中心</span>
+      <span class="more-btn">更多 ›</span>
+    </div>
+    <div class="activity-cards">
+      <div class="activity-card" style="background:linear-gradient(135deg,#FFF8F0,#FFECD2)">
+        <div class="activity-badge">进行中</div>
+        <div style="font-size:15px;font-weight:700;color:#E67E22;margin-bottom:4px">每日签到赢锦鲤</div>
+        <div style="font-size:11px;color:#666">签到中奖送宝币</div>
+      </div>
+      <div class="activity-card" style="background:linear-gradient(135deg,#FFF0F0,#FFD6D6)">
+        <div class="activity-badge">进行中</div>
+        <div style="font-size:15px;font-weight:700;color:#E74C3C;margin-bottom:4px">团非3月活动</div>
+        <div style="font-size:11px;color:#666">拓新单维老客 奖励赢不停</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab Bar -->
+  <div class="tab-bar" id="homeTabBar">
+    <div class="tab-item" onclick="switchHomeTab(0)">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 10l8-7 8 7v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9z" stroke="#3B7FFF" stroke-width="2" fill="#3B7FFF" fill-opacity="0.15"/><path d="M9 20v-6h6v6" stroke="#3B7FFF" stroke-width="2"/></svg>
+      <span class="tab-label" style="color:#3B7FFF">首页</span>
+    </div>
+    <div class="tab-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#999" stroke-width="2"/><path d="M3 9h18" stroke="#999" stroke-width="2"/><path d="M7 13h4" stroke="#999" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="tab-label" style="color:#999">非车</span>
+    </div>
+    <div class="tab-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M4 4h5v16H4zM15 4h5v16h-5z" stroke="#999" stroke-width="2" stroke-linejoin="round"/><path d="M9 4h6v16H9" stroke="#999" stroke-width="2" stroke-linejoin="round" fill="none"/></svg>
+      <span class="tab-label" style="color:#999">学习</span>
+    </div>
+    <div class="tab-item">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#999" stroke-width="2"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="#999" stroke-width="2" stroke-linecap="round"/></svg>
+      <span class="tab-label" style="color:#999">我的</span>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ==================== AI MARKETING PAGE ==================== -->
+<div class="page right" id="aiPage">
+<div class="ai-page" style="min-height:100vh;padding-bottom:140px;">
+  <!-- Status Bar -->
+  <div style="display:flex;justify-content:space-between;align-items:center;padding:8px 24px;color:#1A1A2E;font-size:15px;font-weight:600">
+    <span>9:41</span>
+    <div style="display:flex;align-items:center;gap:6px">
+      <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="6" width="3" height="6" rx="1" fill="#1A1A2E"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1A1A2E"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#1A1A2E"/><rect x="13.5" y="0" width="3" height="12" rx="1" fill="#1A1A2E"/></svg>
+      <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3.5 1 5.5L2.5 7c1.2-1.5 3.2-2.5 5.5-2.5S12.3 5.5 13.5 7L15 5.5C13.5 3.5 11 2 8 2z" fill="#1A1A2E"/><path d="M8 5.5c-1.8 0-3.3.8-4.3 2L5.2 9c.7-1 1.7-1.5 2.8-1.5s2.1.5 2.8 1.5l1.5-1.5c-1-1.2-2.5-2-4.3-2z" fill="#1A1A2E"/><circle cx="8" cy="10.5" r="1.5" fill="#1A1A2E"/></svg>
+      <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="2.5" stroke="#1A1A2E" stroke-opacity=".35"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="#1A1A2E"/><path d="M25 5v3.5a1.8 1.8 0 000-3.5z" fill="#1A1A2E" fill-opacity=".4"/></svg>
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <div class="ai-nav">
+    <div class="ai-back" onclick="navigateTo('homePage')">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>万能营销</span>
+    </div>
+    <div class="ai-menu">
+      <svg width="20" height="20" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#1A1A2E" stroke-width="2.2" stroke-linecap="round"/></svg>
+    </div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="ai-main-card">
+    <div class="ai-greeting">
+      <h2>Hi~魏总监</h2>
+      <p>下午好，电量重启时刻！现在是您的黄金工作时间，已为您筛选高意向客户</p>
+    </div>
+
+    <!-- Scrollable Tabs -->
+    <div class="ai-tabs-scroll">
+      <div class="ai-tabs" id="aiTabs"></div>
+    </div>
+
+    <div class="ai-divider"></div>
+
+    <!-- Stats text -->
+    <div class="ai-stats-text" id="statsText">
+      共为您挖掘<span class="hl" id="statCatCount">5</span>类<span class="hl" id="statTotalCount">24</span>位今日可重点跟进的客户
+    </div>
+
+    <!-- Stats Row -->
+    <div class="ai-stats-row" id="statsRow"></div>
+
+    <!-- Swipeable Cards -->
+    <div class="cards-container" id="cardsContainer">
+      <div class="cards-track" id="cardsTrack"></div>
+    </div>
+    <div class="swipe-dots" id="swipeDots"></div>
+  </div>
+
+  <!-- CTA -->
+  <div class="ai-cta">
+    <button class="ai-cta-btn">
+      开始今天的工作
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="white" fill-opacity=".25"/><path d="M9 7l5 4-5 4" fill="white"/></svg>
+    </button>
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="ai-bottom-bar">
+    <div class="ai-input-bar">
+      <div class="ai-bar-btn">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg" x1="5" y1="2" x2="19" y2="17"><stop stop-color="#3B7FFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><path d="M12 2l2 5h5l-4 3.5 1.5 5L12 13l-4.5 2.5L9 10.5 5 7h5z" fill="url(#sg)"/></svg>
+      </div>
+      <div class="ai-mic-btn">
+        <div class="ai-mic-inner"></div>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" style="position:relative;z-index:1"><rect x="9" y="3" width="6" height="11" rx="3" fill="white"/><path d="M6 12a6 6 0 0012 0" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M12 19v2.5" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+      </div>
+      <div class="ai-bar-btn">
+        <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><circle cx="6" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="6" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="6" cy="16" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="16" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="16" r="1.8" fill="#3B7FFF"/></svg>
+      </div>
+    </div>
+    <div class="ai-disclaimer">ⓘ 内容由AI生成，仅供参考，以官方内容条款为准</div>
+    <div class="home-indicator"><div></div></div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<script>
+// ===== PAGE NAVIGATION =====
+function navigateTo(pageId) {
+  const pages = document.querySelectorAll('.page');
+  if (pageId === 'aiPage') {
+    document.getElementById('homePage').className = 'page left';
+    document.getElementById('aiPage').className = 'page active';
+  } else {
+    document.getElementById('aiPage').className = 'page right';
+    document.getElementById('homePage').className = 'page active';
+  }
+}
+
+// ===== HOME: Agent Tab Switching =====
+function switchAgentTab(idx) {
+  const tabs = document.querySelectorAll('#agentTabs .agent-tab');
+  tabs.forEach((t,i) => t.classList.toggle('active', i===idx));
+  const contents = [
+    { icon:'📊', title:'团队小微脱保续回', tag:'3月22日到期', h3:'成员王武春的续保单已经脱保啦', p:'立即前往完成任务', btn:'提醒成员' },
+    { icon:'🏠', title:'非车续保提醒', tag:'本周到期3单', h3:'客户李明的家财险即将到期', p:'及时跟进避免脱保', btn:'立即跟进' },
+    { icon:'👥', title:'高意向潜客推荐', tag:'新增5位', h3:'系统为您推荐了5位高意向潜客', p:'点击查看详细信息', btn:'查看详情' },
+    { icon:'🔍', title:'潜客深度挖掘', tag:'智能分析', h3:'发现3位客户有加保需求', p:'基于AI智能分析结果', btn:'开始挖掘' },
+  ];
+  const c = contents[idx];
+  document.getElementById('agentContent').innerHTML = `
+    <div class="agent-card">
+      <div class="agent-card-header">
+        <div class="agent-card-icon"><span style="font-size:18px">${c.icon}</span></div>
+        <span class="agent-card-title">${c.title}</span>
+        <span class="agent-card-tag">${c.tag}</span>
+      </div>
+      <div class="agent-card-body">
+        <div class="agent-card-text"><h3>${c.h3}</h3><p>${c.p}</p></div>
+        <button class="remind-btn">${c.btn}</button>
+      </div>
+    </div>
+    <div class="agent-dots"><div class="agent-dot"></div><div class="agent-dot active"></div></div>`;
+}
+
+// ===== AI PAGE: DATA =====
+const aiTabsData = [
+  { label:'今日关注', icon:'focus' },
+  { label:'产品咨询', icon:'product' },
+  { label:'异议促成', icon:'objection' },
+  { label:'产品文案', icon:'copy' },
+  { label:'发朋友圈', icon:'moments' },
+  { label:'活动咨询', icon:'activity' },
+  { label:'策略建议', icon:'strategy' },
+  { label:'人工服务', icon:'service' },
+  { label:'健康险核保', icon:'health' },
+];
+
+const statCategories = {
+  0: [ // 今日关注
+    {num:8,label:'车险续保',cards:[
+      {tag:'咨询增多',title:'车险续保成交概率大，可推进',name:'深圳珊姐'},
+      {tag:'即将到期',title:'车险还有7天到期，续保意愿强',name:'张伟'},
+      {tag:'高价值',title:'商业险保额高，续保价值大',name:'李芳'}
+    ]},
+    {num:8,label:'寿险潜客',cards:[
+      {tag:'咨询增多',title:'多次咨询重疾险，购买意愿强',name:'王小芳'},
+      {tag:'需求明确',title:'刚添二胎，家庭保障需求大',name:'陈建国'},
+      {tag:'高收入',title:'年收入50万+，保障意识强',name:'刘思琪'}
+    ]},
+    {num:5,label:'非车潜客',cards:[
+      {tag:'咨询增多',title:'家庭保障缺口大，有触客机会',name:'陈东清'},
+      {tag:'新房购置',title:'刚购新房，需要家财险保障',name:'赵雅琴'},
+      {tag:'企业主',title:'小企业主，团体险需求明确',name:'黄志强'}
+    ]},
+    {num:1,label:'车险潜客',cards:[
+      {tag:'新车购置',title:'刚提新车，急需车险投保',name:'孙明明'},
+      {tag:'转保意向',title:'对当前保费不满意，有转保意向',name:'周大伟'}
+    ]},
+    {num:2,label:'车险加购',cards:[
+      {tag:'保障不足',title:'仅有交强险，商业险缺口大',name:'吴海燕'},
+      {tag:'咨询增多',title:'多次询问划痕险和涉水险',name:'马晓东'}
+    ]},
+  ],
+  1: [ // 产品咨询
+    {num:6,label:'重疾险',cards:[{tag:'热门',title:'重疾险咨询量大幅增加',name:'客户A'},{tag:'对比',title:'客户正在对比多家重疾产品',name:'客户B'}]},
+    {num:4,label:'医疗险',cards:[{tag:'新品',title:'百万医疗新品上线引关注',name:'客户C'},{tag:'续费',title:'医疗险续费客户需跟进',name:'客户D'}]},
+    {num:3,label:'年金险',cards:[{tag:'理财',title:'年金险理财功能吸引客户',name:'客户E'}]},
+    {num:2,label:'意外险',cards:[{tag:'团体',title:'企业团体意外险需求上升',name:'客户F'}]},
+  ],
+  2: [ // 异议促成
+    {num:5,label:'价格异议',cards:[{tag:'价格',title:'客户认为保费偏高需说服',name:'郑先生'},{tag:'对比',title:'与竞品价格对比后犹豫',name:'周女士'}]},
+    {num:3,label:'保障异议',cards:[{tag:'保障',title:'对保障范围有疑虑需解答',name:'赵先生'}]},
+    {num:4,label:'理赔异议',cards:[{tag:'理赔',title:'担心理赔流程复杂',name:'钱女士'},{tag:'案例',title:'需要成功理赔案例说服',name:'吴先生'}]},
+  ],
+  3: [ // 产品文案
+    {num:7,label:'朋友圈',cards:[{tag:'热文',title:'本周爆款朋友圈文案推荐',name:'系统推荐'},{tag:'节日',title:'春季养生主题文案可用',name:'AI生成'}]},
+    {num:3,label:'短视频',cards:[{tag:'模板',title:'15秒短视频脚本模板',name:'AI创作'}]},
+    {num:2,label:'海报',cards:[{tag:'新品',title:'新品上市海报文案待发布',name:'运营推荐'}]},
+  ],
+};
+
+// Fill remaining tabs with sample data
+for (let i = 4; i < 9; i++) {
+  statCategories[i] = [
+    {num:Math.floor(Math.random()*8)+1,label:'类目A',cards:[{tag:'推荐',title:'系统智能推荐内容',name:'智能推荐'}]},
+    {num:Math.floor(Math.random()*5)+1,label:'类目B',cards:[{tag:'热门',title:'热门内容待您查看',name:'系统'}]},
+  ];
+}
+
+let currentAiTab = 0;
+let currentStatIdx = 0;
+let currentCardIdx = 0;
+let touchStartX = 0;
+let touchEndX = 0;
+
+// ===== BUILD AI TABS =====
+function buildAiTabs() {
+  const container = document.getElementById('aiTabs');
+  container.innerHTML = '';
+  aiTabsData.forEach((tab, i) => {
+    const el = document.createElement('div');
+    el.className = 'ai-tab' + (i === currentAiTab ? ' active' : '');
+    el.innerHTML = `<div style="width:36px;height:36px">${getTabIcon(tab.icon, i === currentAiTab)}</div><div class="label">${tab.label}</div>`;
+    el.onclick = () => { currentAiTab = i; currentStatIdx = 0; currentCardIdx = 0; buildAiTabs(); buildStats(); };
+    container.appendChild(el);
+  });
+}
+
+function getTabIcon(icon, active) {
+  const c = active ? '#3B7FFF' : '#7B8CA8';
+  const bg = active ? '#EBF3FF' : '#F0F3F8';
+  const icons = {
+    focus: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><circle cx="16" cy="15" r="4.5" stroke="${c}" stroke-width="1.8"/><path d="M9 27c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/><circle cx="25" cy="11" r="4" fill="#3B7FFF"/><path d="M23.5 11h3M25 9.5v3" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg>`,
+    product: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><rect x="10" y="9" width="13" height="17" rx="2" stroke="${c}" stroke-width="1.8"/><path d="M13 14h7M13 17.5h7M13 21h4" stroke="${c}" stroke-width="1.2" stroke-linecap="round"/><circle cx="25" cy="11" r="4" fill="#3B7FFF"/><text x="25" y="13.5" text-anchor="middle" fill="white" font-size="6" font-weight="700">AI</text></svg>`,
+    objection: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><rect x="9" y="10" width="15" height="14" rx="3" stroke="${c}" stroke-width="1.8"/><path d="M13 16h8M13 19.5h5" stroke="${c}" stroke-width="1.2" stroke-linecap="round"/><circle cx="25" cy="11" r="4" fill="#FF8C42"/><text x="25" y="13.8" text-anchor="middle" fill="white" font-size="8" font-weight="700">$</text></svg>`,
+    copy: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><circle cx="15" cy="15" r="4.5" stroke="${c}" stroke-width="1.8"/><path d="M9 27c0-3.5 2.7-6.5 6-6.5s6 3 6 6.5" stroke="${c}" stroke-width="1.8" stroke-linecap="round"/><rect x="20" y="9" width="8" height="10" rx="2" stroke="${c}" stroke-width="1.4" fill="${bg}"/><path d="M22 13h4M22 16h3" stroke="${c}" stroke-width="1" stroke-linecap="round"/></svg>`,
+    moments: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><circle cx="18" cy="18" r="8" stroke="${c}" stroke-width="1.8"/><circle cx="18" cy="18" r="3" stroke="${c}" stroke-width="1.5"/><path d="M18 10v2M18 24v2M10 18h2M24 18h2" stroke="${c}" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    activity: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><rect x="10" y="10" width="16" height="14" rx="2" stroke="${c}" stroke-width="1.8"/><path d="M14 8v4M22 8v4M10 16h16" stroke="${c}" stroke-width="1.5" stroke-linecap="round"/></svg>`,
+    strategy: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><path d="M12 24V16M18 24V12M24 24V18" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/></svg>`,
+    service: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><path d="M12 14a6 6 0 0112 0v2" stroke="${c}" stroke-width="1.8"/><rect x="9" y="16" width="5" height="7" rx="2" stroke="${c}" stroke-width="1.5"/><rect x="22" y="16" width="5" height="7" rx="2" stroke="${c}" stroke-width="1.5"/></svg>`,
+    health: `<svg width="36" height="36" viewBox="0 0 36 36" fill="none"><rect x="4" y="4" width="28" height="28" rx="7" fill="${bg}"/><path d="M14 18h8M18 14v8" stroke="${c}" stroke-width="2.5" stroke-linecap="round"/><rect x="10" y="10" width="16" height="16" rx="4" stroke="${c}" stroke-width="1.8"/></svg>`,
+  };
+  return icons[icon] || icons.focus;
+}
+
+// ===== BUILD STATS =====
+function buildStats() {
+  const data = statCategories[currentAiTab] || statCategories[0];
+  const total = data.reduce((s,d) => s+d.num, 0);
+  document.getElementById('statCatCount').textContent = data.length;
+  document.getElementById('statTotalCount').textContent = total;
+
+  const row = document.getElementById('statsRow');
+  row.innerHTML = '';
+  data.forEach((s, i) => {
+    if (i > 0) { const sep = document.createElement('div'); sep.className='stat-sep'; row.appendChild(sep); }
+    const el = document.createElement('div');
+    el.className = 'ai-stat' + (i === currentStatIdx ? ' active' : '');
+    el.innerHTML = `<div class="num">${s.num}</div><div class="lbl">${s.label}</div>`;
+    el.onclick = () => { currentStatIdx = i; currentCardIdx = 0; buildStats(); buildCards(); };
+    row.appendChild(el);
+  });
+  buildCards();
+}
+
+// ===== BUILD SWIPEABLE CARDS =====
+function buildCards() {
+  const data = statCategories[currentAiTab] || statCategories[0];
+  const cards = data[currentStatIdx] ? data[currentStatIdx].cards : [];
+  const track = document.getElementById('cardsTrack');
+  const container = document.getElementById('cardsContainer');
+  track.innerHTML = '';
+  track.style.transform = `translateX(-${currentCardIdx * 100}%)`;
+
+  // Build slides - each slide shows 3 cards (left, center, right)
+  cards.forEach((card, idx) => {
+    const prevCard = cards[(idx - 1 + cards.length) % cards.length];
+    const nextCard = cards[(idx + 1) % cards.length];
+    const slide = document.createElement('div');
+    slide.className = 'card-slide';
+    slide.innerHTML = `
+      ${cards.length > 1 ? `<div class="customer-card side-left">
+        <div class="card-tag">${prevCard.tag}</div>
+        <div class="card-body">${prevCard.title}</div>
+        <div class="card-quote">\u201D\u201D</div>
+        <div class="card-user"><div class="card-avatar"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="card-name">${prevCard.name}</span></div>
+      </div>` : ''}
+      <div class="customer-card center">
+        <div class="card-tag">${card.tag}</div>
+        <div class="card-body">${card.title}</div>
+        <div class="card-quote">\u201D\u201D</div>
+        <div class="card-user"><div class="card-avatar"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="card-name">${card.name}</span></div>
+      </div>
+      ${cards.length > 1 ? `<div class="customer-card side-right">
+        <div class="card-tag">${nextCard.tag}</div>
+        <div class="card-body">${nextCard.title}</div>
+        <div class="card-quote">\u201D\u201D</div>
+        <div class="card-user"><div class="card-avatar"><svg width="14" height="14" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="card-name">${nextCard.name}</span></div>
+      </div>` : ''}
+    `;
+    track.appendChild(slide);
+  });
+
+  // Build dots
+  const dots = document.getElementById('swipeDots');
+  dots.innerHTML = '';
+  cards.forEach((_, i) => {
+    const d = document.createElement('div');
+    d.className = 'swipe-dot' + (i === currentCardIdx ? ' active' : '');
+    dots.appendChild(d);
+  });
+
+  // Touch events for swipe
+  container.ontouchstart = (e) => { touchStartX = e.touches[0].clientX; };
+  container.ontouchend = (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentCardIdx < cards.length - 1) { currentCardIdx++; }
+      else if (diff < 0 && currentCardIdx > 0) { currentCardIdx--; }
+      track.style.transform = `translateX(-${currentCardIdx * 100}%)`;
+      // Update dots
+      dots.querySelectorAll('.swipe-dot').forEach((d,i) => d.classList.toggle('active', i===currentCardIdx));
+    }
+  };
+
+  // Mouse events for desktop
+  let mouseDown = false, mouseStartX = 0;
+  container.onmousedown = (e) => { mouseDown = true; mouseStartX = e.clientX; e.preventDefault(); };
+  container.onmouseup = (e) => {
+    if (!mouseDown) return;
+    mouseDown = false;
+    const diff = mouseStartX - e.clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0 && currentCardIdx < cards.length - 1) { currentCardIdx++; }
+      else if (diff < 0 && currentCardIdx > 0) { currentCardIdx--; }
+      track.style.transform = `translateX(-${currentCardIdx * 100}%)`;
+      dots.querySelectorAll('.swipe-dot').forEach((d,i) => d.classList.toggle('active', i===currentCardIdx));
+    }
+  };
+  container.onmouseleave = () => { mouseDown = false; };
+}
+
+// ===== INIT =====
+buildAiTabs();
+buildStats();
+</script>
+</body>
+</html>
