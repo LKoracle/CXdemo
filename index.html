@@ -6,65 +6,210 @@
 <title>创保网APP</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:linear-gradient(145deg,#e2e6ee 0%,#cfd4de 50%,#d8dce4 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px 0}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:linear-gradient(160deg,#e8eaf0 0%,#d5d8e2 30%,#c8cdd9 60%,#dde0e8 100%);min-height:100vh;display:flex;justify-content:center;align-items:center;padding:20px 0;position:relative}
+body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(255,255,255,.4) 0%,transparent 60%),radial-gradient(ellipse at 70% 80%,rgba(180,190,210,.3) 0%,transparent 50%);pointer-events:none}
 
-/* ========== IPHONE 15 PRO FRAME ========== */
-.phone{position:relative;width:380px;height:780px;flex-shrink:0}
+/* ========== IPHONE 16 PRO FRAME ========== */
+.phone{position:relative;width:380px;height:800px;flex-shrink:0;filter:drop-shadow(0 40px 80px rgba(0,0,0,.32)) drop-shadow(0 12px 24px rgba(0,0,0,.18))}
+
+/* Outer titanium chassis — Silver / White Titanium */
 .phone-body{
   position:absolute;inset:0;
-  background:linear-gradient(145deg,#1b1b1f 0%,#2d2d32 30%,#1b1b1f 60%,#28282d 100%);
-  border-radius:52px;
+  background:linear-gradient(160deg,
+    #d4d4d8 0%,
+    #e8e8ec 6%,
+    #c8c8ce 14%,
+    #dcdce0 28%,
+    #b8b8bf 42%,
+    #d0d0d6 55%,
+    #c2c2c9 68%,
+    #dadadf 82%,
+    #ccccd2 94%,
+    #d6d6db 100%
+  );
+  border-radius:56px;
   box-shadow:
-    inset 0 0 0 1px rgba(255,255,255,.08),
-    0 0 0 1.5px #0d0d0f,
-    0 0 0 3px #3c3c40,
-    0 0 0 4px #0d0d0f,
-    0 30px 80px -10px rgba(0,0,0,.55),
-    0 10px 30px -5px rgba(0,0,0,.35);
+    /* inner bezel */
+    inset 0 0 0 .5px rgba(255,255,255,.5),
+    /* titanium band - inner seam */
+    0 0 0 1px #a0a0a6,
+    /* titanium band - main visible silver edge */
+    0 0 0 2.5px #c6c6cc,
+    /* titanium band - outer seam */
+    0 0 0 3.5px #969699,
+    /* subtle outer contour */
+    0 0 0 4.5px rgba(100,100,110,.25);
 }
-/* Titanium edge highlights */
+
+/* Titanium specular highlights — bright silver reflection */
 .phone-body::before{
-  content:'';position:absolute;inset:0;border-radius:52px;
-  background:linear-gradient(135deg,rgba(255,255,255,.12) 0%,transparent 30%,transparent 70%,rgba(255,255,255,.06) 100%);
+  content:'';position:absolute;inset:0;border-radius:56px;
+  background:
+    linear-gradient(158deg,
+      rgba(255,255,255,.55) 0%,
+      rgba(255,255,255,.30) 8%,
+      rgba(255,255,255,.10) 18%,
+      transparent 30%,
+      transparent 55%,
+      rgba(255,255,255,.06) 75%,
+      rgba(255,255,255,.18) 92%,
+      rgba(255,255,255,.25) 100%
+    );
   pointer-events:none;z-index:1;
 }
-/* Dynamic Island */
-.dynamic-island{
-  position:absolute;top:12px;left:50%;transform:translateX(-50%);
-  width:126px;height:36px;
-  background:#000;border-radius:20px;z-index:300;
-  box-shadow:inset 0 0 4px rgba(0,0,0,.8);
+/* Inner depth shadow */
+.phone-body::after{
+  content:'';position:absolute;inset:3px;border-radius:54px;
+  box-shadow:inset 0 1px 4px rgba(0,0,0,.12), inset 0 -1px 2px rgba(255,255,255,.4);
+  pointer-events:none;z-index:1;
 }
-.dynamic-island::after{
-  content:'';position:absolute;top:50%;right:22px;transform:translateY(-50%);
-  width:8px;height:8px;border-radius:50%;
-  background:radial-gradient(circle at 35% 35%,#1e3a5f,#0a1628);
-  box-shadow:0 0 2px rgba(30,80,140,.5);
-}
-/* Side buttons */
-.btn-silent{position:absolute;left:-2.5px;top:110px;width:2.5px;height:26px;background:linear-gradient(90deg,#3c3c40,#4a4a4e,#3c3c40);border-radius:2px 0 0 2px}
-.btn-vol-up{position:absolute;left:-2.5px;top:156px;width:2.5px;height:48px;background:linear-gradient(90deg,#3c3c40,#4a4a4e,#3c3c40);border-radius:2px 0 0 2px}
-.btn-vol-dn{position:absolute;left:-2.5px;top:214px;width:2.5px;height:48px;background:linear-gradient(90deg,#3c3c40,#4a4a4e,#3c3c40);border-radius:2px 0 0 2px}
-.btn-power{position:absolute;right:-2.5px;top:168px;width:2.5px;height:72px;background:linear-gradient(90deg,#3c3c40,#4a4a4e,#3c3c40);border-radius:0 2px 2px 0}
 
-/* Screen */
+/* ---- Dynamic Island ---- */
+.dynamic-island{
+  position:absolute;top:13px;left:50%;transform:translateX(-50%);
+  width:124px;height:37px;
+  background:#000;border-radius:22px;z-index:300;
+  box-shadow:
+    inset 0 1px 3px rgba(0,0,0,.9),
+    inset 0 -0.5px 1px rgba(255,255,255,.04),
+    0 0.5px 1px rgba(255,255,255,.05);
+}
+/* Front camera lens */
+.dynamic-island::after{
+  content:'';position:absolute;top:50%;right:24px;transform:translateY(-50%);
+  width:10px;height:10px;border-radius:50%;
+  background:radial-gradient(circle at 38% 38%,
+    #2a4a7a 0%,
+    #142844 40%,
+    #0a1628 70%,
+    #050d18 100%
+  );
+  box-shadow:
+    inset 0 0 2px rgba(255,255,255,.15),
+    0 0 3px rgba(30,80,160,.3),
+    inset 0 0 0 .5px rgba(80,130,200,.2);
+}
+/* Infrared dot projector (subtle) */
+.dynamic-island::before{
+  content:'';position:absolute;top:50%;left:28px;transform:translateY(-50%);
+  width:5px;height:5px;border-radius:50%;
+  background:radial-gradient(circle,#0d0d12 0%,#000 100%);
+  box-shadow:inset 0 0 1px rgba(255,255,255,.06);
+}
+
+/* ---- Side Buttons (Silver Titanium) ---- */
+.btn-silent{
+  position:absolute;left:-3px;top:120px;width:3.5px;height:28px;
+  background:linear-gradient(90deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  border-radius:2px 0 0 2px;
+  box-shadow:-1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+}
+.btn-vol-up{
+  position:absolute;left:-3px;top:168px;width:3.5px;height:50px;
+  background:linear-gradient(90deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  border-radius:2px 0 0 2px;
+  box-shadow:-1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+}
+.btn-vol-dn{
+  position:absolute;left:-3px;top:228px;width:3.5px;height:50px;
+  background:linear-gradient(90deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  border-radius:2px 0 0 2px;
+  box-shadow:-1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+}
+.btn-power{
+  position:absolute;right:-3px;top:180px;width:3.5px;height:76px;
+  background:linear-gradient(270deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  border-radius:0 2px 2px 0;
+  box-shadow:1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+}
+
+/* ---- Screen ---- */
 .phone-screen{
-  position:absolute;top:10px;left:10px;right:10px;bottom:10px;
-  border-radius:44px;overflow:hidden;
+  position:absolute;top:9px;left:9px;right:9px;bottom:9px;
+  border-radius:48px;overflow:hidden;
   background:#F5F6FA;z-index:2;
+  /* OLED-style deep black border around screen */
+  box-shadow:inset 0 0 0 .5px rgba(0,0,0,.5);
 }
 
 /* ========== APP CORE ========== */
 .app{width:100%;height:100%;position:relative;overflow:hidden;background:#F5F6FA}
-.page{position:absolute;inset:0;overflow-y:auto;overflow-x:hidden;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;will-change:transform,opacity;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column}
+.page{position:absolute;inset:0;overflow:hidden;transition:transform .35s cubic-bezier(.4,0,.2,1),opacity .35s;will-change:transform,opacity;display:flex;flex-direction:column}
 .page.active{transform:translateX(0);opacity:1;z-index:2}
 .page.left{transform:translateX(-35%);opacity:.4;z-index:1}
 .page.right{transform:translateX(100%);opacity:.8;z-index:3}
 
 /* ========== HOME PAGE ========== */
+.h-fixed-top{flex-shrink:0;z-index:10;position:relative}
 .h-scroll{flex:1;overflow-y:auto;overflow-x:hidden;-webkit-overflow-scrolling:touch}
-.h-status{display:flex;justify-content:space-between;align-items:center;padding:42px 16px 6px;background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8);color:#fff;font-size:12px;font-weight:600}
-.h-header{background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8);padding:0 14px}
+
+/* Default header (blue bg with avatar + search) */
+.h-header-default{
+  display:grid;grid-template-rows:1fr;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1),opacity .3s ease;
+  opacity:1;
+}
+.h-header-default>*{overflow:hidden}
+.h-fixed-top.scrolled .h-header-default{
+  grid-template-rows:0fr;opacity:0;pointer-events:none;
+}
+
+/* Compact header (icons row on scroll) */
+.h-header-compact{
+  display:grid;grid-template-rows:0fr;
+  opacity:0;pointer-events:none;
+  transition:grid-template-rows .4s cubic-bezier(.4,0,.2,1),opacity .3s ease .08s;
+  background:#F5F6FA;
+  border-bottom:1px solid transparent;
+}
+.h-header-compact>.h-compact-inner{overflow:hidden;display:flex;align-items:center;justify-content:space-between;padding:0 14px}
+.h-fixed-top.scrolled .h-header-compact{
+  grid-template-rows:1fr;opacity:1;pointer-events:auto;
+  border-bottom-color:#E8EBF0;
+}
+.h-fixed-top.scrolled .h-header-compact>.h-compact-inner{padding:8px 14px 10px}
+.h-compact-left{display:flex;align-items:center;gap:16px}
+.h-compact-right{display:flex;align-items:center;gap:14px}
+.h-compact-icon{width:32px;height:32px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.h-compact-mascot{font-size:28px;filter:drop-shadow(0 1px 3px rgba(59,127,255,.15));margin-left:auto;margin-right:6px}
+
+/* Status bar — uses ::after overlay for smooth bg transition */
+.h-status{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:42px 16px 6px;
+  background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8);
+  color:#fff;font-size:12px;font-weight:600;
+  position:relative;overflow:hidden;
+}
+.h-status::after{
+  content:'';position:absolute;inset:0;
+  background:#F5F6FA;
+  opacity:0;
+  transition:opacity .4s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+}
+.h-fixed-top.scrolled .h-status::after{opacity:1}
+
+/* Status bar text/icons color transition */
+.h-status>*{position:relative;z-index:1}
+.h-status span,.h-status div{transition:color .4s ease}
+.h-fixed-top.scrolled .h-status{color:#1A1A2E}
+.h-fixed-top.scrolled .h-status>span{color:#1A1A2E}
+.h-fixed-top.scrolled .h-status span{color:#1A1A2E}
+.h-status svg *{transition:fill .4s ease,stroke .4s ease}
+.h-fixed-top.scrolled .h-status svg path[fill="white"]{fill:#1A1A2E}
+.h-fixed-top.scrolled .h-status svg circle[fill="white"]{fill:#1A1A2E}
+.h-fixed-top.scrolled .h-status svg rect[fill="white"]{fill:#1A1A2E}
+.h-fixed-top.scrolled .h-status .h-status-battery{background:rgba(0,0,0,.1);color:#1A1A2E}
+.h-header{background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8);padding:0 14px;position:relative}
+.h-header::after{
+  content:'';position:absolute;inset:0;
+  background:#F5F6FA;
+  opacity:0;
+  transition:opacity .4s cubic-bezier(.4,0,.2,1);
+  pointer-events:none;
+}
+.h-fixed-top.scrolled .h-header::after{opacity:1}
 .h-search-row{display:flex;align-items:center;gap:8px;padding-bottom:10px}
 .h-avatar{width:40px;height:40px;border-radius:20px;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative}
 .h-avatar-badge{position:absolute;bottom:-3px;left:50%;transform:translateX(-50%);background:#FF6B35;color:#fff;font-size:7px;padding:1px 3px;border-radius:4px;white-space:nowrap;line-height:10px}
@@ -92,17 +237,40 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
 .h-tools::-webkit-scrollbar{display:none}
 .h-tool{flex-shrink:0;border-radius:12px;padding:10px 12px;display:flex;align-items:center;gap:8px;cursor:pointer;min-width:96px}
 
-/* ========== AGENT SECTION (corrected) ========== */
-.h-agent{background:#fff;margin:10px 14px;border-radius:14px;overflow:hidden}
-/* Top banner with mascot + greeting + task button */
-.h-agent-banner{background:linear-gradient(135deg,#EBF3FF,#F0F5FF);padding:14px;display:flex;align-items:center;gap:8px;position:relative}
-.h-agent-mascot{font-size:42px;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
-.h-agent-greeting{flex:1;height:30px;background:linear-gradient(90deg,#FFE5CC,#FFD4B0);border-radius:15px;opacity:.55}
-.h-agent-task{background:linear-gradient(135deg,#3B7FFF,#5B9FFF);color:#fff;padding:10px 14px;border-radius:12px 14px 14px 0;display:flex;align-items:center;gap:5px;font-size:13px;font-weight:600;cursor:pointer;position:relative;white-space:nowrap;flex-shrink:0;box-shadow:0 4px 12px rgba(59,127,255,.25)}
-.h-agent-task-badge{position:absolute;top:-7px;right:-7px;background:#FF4757;color:#fff;width:22px;height:22px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;border:2px solid #fff}
-/* Tabs row - directly under banner, same card */
-.h-agent-tabs{display:flex;padding:0 14px;border-bottom:1px solid #F0F2F5}
-.h-agent-tab{padding:12px 0;margin-right:22px;font-size:13px;color:#8A95A8;font-weight:500;cursor:pointer;position:relative;white-space:nowrap}
+/* ========== AGENT SECTION ========== */
+.h-agent{background:#fff;margin:10px 14px;border-radius:14px;overflow:visible;position:relative}
+/* Floating tag bar: mascot + bubble + task btn — overlaps top of card */
+.h-agent-float{
+  position:absolute;top:-16px;left:10px;right:10px;z-index:3;
+  display:flex;align-items:center;gap:6px;
+}
+.h-agent-mascot{font-size:36px;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.1))}
+.h-agent-bubble{
+  flex:1;background:linear-gradient(100deg,#FFF3E5,#FFE8D0);
+  border-radius:16px;padding:5px 12px;
+  display:flex;align-items:center;gap:4px;
+  font-size:10.5px;color:#D4760A;font-weight:500;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  white-space:nowrap;overflow:hidden;
+}
+.h-agent-task{
+  background:linear-gradient(135deg,#3B7FFF,#5B9FFF);color:#fff;
+  padding:8px 14px;border-radius:12px 14px 14px 2px;
+  display:flex;align-items:center;gap:5px;
+  font-size:12px;font-weight:600;cursor:pointer;
+  position:relative;white-space:nowrap;flex-shrink:0;
+  box-shadow:0 4px 12px rgba(59,127,255,.25);
+}
+.h-agent-task-badge{
+  position:absolute;top:-8px;right:-8px;
+  background:#FF4757;color:#fff;
+  min-width:22px;height:22px;border-radius:11px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:10px;font-weight:700;border:2px solid #fff;
+}
+/* Tabs row — padded top to sit below the floating tag */
+.h-agent-tabs{display:flex;padding:28px 14px 0;border-bottom:1px solid #F0F2F5}
+.h-agent-tab{padding:10px 0;margin-right:22px;font-size:13px;color:#8A95A8;font-weight:500;cursor:pointer;position:relative;white-space:nowrap}
 .h-agent-tab.active{color:#1A1A2E;font-weight:700}
 .h-agent-tab.active::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20px;height:3px;background:#3B7FFF;border-radius:2px}
 /* Card content area */
@@ -136,63 +304,295 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
 
 /* ========== AI MARKETING PAGE ========== */
 .ai-page{background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 10%,#E5DDF5 25%,#EDE5F5 40%,#F3EFF8 55%,#F5F6FA 75%)}
-.ai-status{display:flex;justify-content:space-between;align-items:center;padding:42px 20px 6px;color:#1A1A2E;font-size:14px;font-weight:600}
-.ai-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 12px}
+.ai-status{display:flex;justify-content:space-between;align-items:center;padding:42px 20px 4px;color:#1A1A2E;font-size:14px;font-weight:600}
+.ai-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 8px}
 .ai-back{display:flex;align-items:center;gap:5px;cursor:pointer}
 .ai-back span{font-size:16px;font-weight:700;color:#1A1A2E}
 .ai-menu{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer}
-.ai-card{margin:0 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(20px);border-radius:18px;padding:20px 16px 16px;box-shadow:0 4px 24px rgba(100,120,180,.08)}
-.ai-greet h2{font-size:18px;font-weight:700;color:#1A1A2E}
-.ai-greet p{font-size:12px;color:#5A6580;margin-top:6px;line-height:1.6}
-.ai-tabs-wrap{overflow-x:auto;scrollbar-width:none;margin:18px -16px 16px;padding:0 16px}
+.ai-card{margin:0 14px;background:rgba(255,255,255,.82);backdrop-filter:blur(20px);border-radius:18px;padding:14px 16px 12px;box-shadow:0 4px 24px rgba(100,120,180,.08)}
+.ai-greet h2{font-size:16px;font-weight:700;color:#1A1A2E}
+.ai-greet p{font-size:11px;color:#5A6580;margin-top:4px;line-height:1.5}
+.ai-tabs-wrap{overflow-x:auto;scrollbar-width:none;margin:12px -16px 0;padding:0 16px}
 .ai-tabs-wrap::-webkit-scrollbar{display:none}
 .ai-tabs{display:flex;gap:5px;width:max-content}
-.ai-tab{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;padding:10px 8px 8px;border-radius:14px;border:1.5px solid transparent;transition:all .25s;min-width:66px;flex-shrink:0}
+.ai-tab{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;padding:8px 8px 6px;border-radius:12px;border:1.5px solid transparent;transition:all .25s;min-width:62px;flex-shrink:0;position:relative}
 .ai-tab.act{background:#fff;border-color:#E0E7FF;box-shadow:0 2px 12px rgba(59,127,255,.1)}
-.ai-tab .lbl{font-size:10px;font-weight:500;color:#7B8CA8;white-space:nowrap}
+/* Triangle pointer on active tab */
+.ai-tab.act::after{
+  content:'';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);
+  width:0;height:0;
+  border-left:7px solid transparent;border-right:7px solid transparent;
+  border-top:7px solid #E0E7FF;
+  filter:drop-shadow(0 1px 1px rgba(0,0,0,.04));
+}
+.ai-tab .lbl{font-size:9px;font-weight:500;color:#7B8CA8;white-space:nowrap}
 .ai-tab.act .lbl{font-weight:600;color:#3B7FFF}
-.ai-div{height:1px;background:#EFF1F5;margin:0 -16px 16px}
-.ai-stats-txt{text-align:center;margin-bottom:14px;font-size:12px;color:#5A6580}
-.ai-stats-txt .hl{color:#3B7FFF;font-weight:700;font-size:16px;margin:0 1px}
-.ai-stats-row{display:flex;justify-content:space-around;align-items:center;margin-bottom:6px}
-.ai-stat{text-align:center;min-width:36px;cursor:pointer;padding:6px 3px;border-radius:8px;transition:all .2s;position:relative}
+
+/* Stats bordered section */
+.ai-stats-section{
+  margin:14px -16px 0;padding:14px 16px 8px;
+  border:1.5px solid #E8ECF2;border-radius:14px;
+  margin-left:0;margin-right:0;
+  background:rgba(255,255,255,.5);
+}
+.ai-stats-txt{text-align:left;margin-bottom:10px;font-size:11px;color:#5A6580}
+.ai-stats-txt .hl{color:#3B7FFF;font-weight:700;font-size:14px;margin:0 1px}
+.ai-stats-row{display:flex;justify-content:space-around;align-items:center;margin-bottom:4px}
+.ai-stat{text-align:center;min-width:32px;cursor:pointer;padding:4px 2px;border-radius:8px;transition:all .2s;position:relative}
 .ai-stat:hover{background:#F0F5FF}
 .ai-stat.act::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:14px;height:2.5px;background:#3B7FFF;border-radius:2px}
-.ai-stat .n{font-size:20px;font-weight:700;color:#1A1A2E;transition:color .2s}
+.ai-stat .n{font-size:17px;font-weight:700;color:#1A1A2E;transition:color .2s}
 .ai-stat.act .n{color:#3B7FFF}
-.ai-stat .l{font-size:10px;color:#8A95A8;margin-top:2px}
-.stat-sep{width:1px;height:26px;background:#E8ECF0;flex-shrink:0}
+.ai-stat .l{font-size:9px;color:#8A95A8;margin-top:1px}
+.stat-sep{width:1px;height:22px;background:#E8ECF0;flex-shrink:0}
 
-/* Cards carousel */
-.cards-box{position:relative;height:200px;overflow:hidden;touch-action:pan-y}
+/* Cards carousel — portrait cards, fan layout, no overlap */
+.cards-box{position:relative;height:180px;overflow:hidden;touch-action:pan-y}
 .cards-track{display:flex;transition:transform .4s cubic-bezier(.25,.46,.45,.94);will-change:transform}
-.card-slide{width:100%;flex-shrink:0;position:relative;height:200px}
-.cc{position:absolute;background:#fff;border-radius:14px;padding:12px;box-shadow:0 4px 14px rgba(0,0,0,.07);transition:all .35s}
-.cc.ctr{width:165px;top:0;left:50%;transform:translateX(-50%);box-shadow:0 6px 28px rgba(59,127,255,.16);z-index:3;padding:14px 14px 10px}
-.cc.sl{width:135px;top:16px;left:2%;transform:rotate(-8deg);transform-origin:bottom right;z-index:1;opacity:.85}
-.cc.sr{width:135px;top:16px;right:2%;left:auto;transform:rotate(7deg);transform-origin:bottom left;z-index:1;opacity:.85}
-.cc-tag{display:inline-block;background:linear-gradient(135deg,#FF5A3C,#FF4757);color:#fff;font-size:9px;padding:2px 6px;border-radius:4px;font-weight:600;margin-bottom:8px}
-.cc-body{font-size:12px;font-weight:700;color:#1A1A2E;line-height:1.5;margin-bottom:12px;min-height:46px}
-.ctr .cc-body{font-size:14px;min-height:60px}
-.cc-q{position:absolute;bottom:34px;right:12px;font-size:30px;color:#E8ECF0;font-weight:700;line-height:1;font-family:Georgia,serif}
-.sl .cc-q,.sr .cc-q{bottom:30px}
-.cc-user{display:flex;align-items:center;gap:6px;border-top:1px solid #F0F2F5;padding-top:8px}
-.cc-av{width:24px;height:24px;border-radius:12px;background:linear-gradient(135deg,#FFD4A8,#FFB878);display:flex;align-items:center;justify-content:center}
-.cc-nm{font-size:11px;color:#5A6580;font-weight:500}
-.sw-dots{display:flex;justify-content:center;gap:4px;padding:8px 0 0}
+.card-slide{width:100%;flex-shrink:0;position:relative;height:180px;display:flex;justify-content:center;align-items:flex-start;gap:0}
+.cc{position:absolute;background:#fff;border-radius:12px;padding:10px;box-shadow:0 4px 14px rgba(0,0,0,.07);transition:all .35s;display:flex;flex-direction:column}
+.cc.ctr{width:108px;height:148px;top:4px;left:50%;transform:translateX(-50%);box-shadow:0 6px 20px rgba(59,127,255,.14);z-index:3;padding:10px 10px 8px}
+.cc.sl{width:100px;height:138px;top:14px;left:6%;transform:rotate(-10deg);transform-origin:bottom center;z-index:2}
+.cc.sr{width:100px;height:138px;top:14px;right:6%;left:auto;transform:rotate(10deg);transform-origin:bottom center;z-index:2}
+.cc-tag{display:inline-block;background:linear-gradient(135deg,#FF5A3C,#FF4757);color:#fff;font-size:7px;padding:2px 0;border-radius:8px;font-weight:600;margin-bottom:6px;text-align:center;width:42%}
+.cc-body{font-size:11px;font-weight:700;color:#1A1A2E;line-height:1.45;margin-bottom:auto;flex:1}
+.ctr .cc-body{font-size:12px}
+.cc-q{position:absolute;bottom:30px;right:8px;font-size:22px;color:#E8ECF0;font-weight:700;line-height:1;font-family:Georgia,serif}
+.sl .cc-q,.sr .cc-q{bottom:28px}
+.cc-user{display:flex;align-items:center;gap:5px;border-top:1px solid #F0F2F5;padding-top:6px;margin-top:auto}
+.cc-av{width:20px;height:20px;border-radius:10px;background:linear-gradient(135deg,#FFD4A8,#FFB878);display:flex;align-items:center;justify-content:center}
+.cc-nm{font-size:10px;color:#5A6580;font-weight:500}
+.sw-dots{display:flex;justify-content:center;gap:4px;padding:6px 0 0}
 .sw-dot{width:5px;height:5px;border-radius:3px;background:#D0D5DD;transition:all .3s}
 .sw-dot.act{width:16px;background:#3B7FFF}
 
-.ai-cta{padding:18px 30px 14px;text-align:center}
-.ai-cta-btn{background:linear-gradient(135deg,#56B4FF,#3B7FFF);color:#fff;font-size:15px;font-weight:600;padding:13px 30px;border-radius:50px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 6px 24px rgba(59,127,255,.35);justify-content:center;border:none;width:100%}
-.ai-bottom{padding:8px 16px 0;background:linear-gradient(180deg,transparent,rgba(243,239,248,.97) 30%);flex-shrink:0}
-.ai-input-bar{background:rgba(255,255,255,.9);backdrop-filter:blur(20px);border-radius:26px;display:flex;align-items:center;justify-content:space-between;padding:8px 20px;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+/* CTA — right aligned, not full width */
+.ai-cta{padding:12px 14px 8px;display:flex;justify-content:flex-end}
+.ai-cta-btn{background:linear-gradient(135deg,#56B4FF,#3B7FFF);color:#fff;font-size:14px;font-weight:600;padding:11px 28px;border-radius:50px;cursor:pointer;display:flex;align-items:center;gap:6px;box-shadow:0 6px 24px rgba(59,127,255,.35);justify-content:center;border:none}
+.ai-bottom{padding:8px 16px 12px;background:#F5F6FA;flex-shrink:0}
+.ai-input-bar{background:rgba(255,255,255,.85);border-radius:26px;display:flex;align-items:center;justify-content:space-between;padding:8px 20px;border:1px solid #E8ECF0}
 .ai-bbtn{width:36px;height:36px;border-radius:10px;background:#EBF3FF;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .ai-mic{width:52px;height:52px;border-radius:26px;background:linear-gradient(180deg,#B0D8FF,#5B9FFF 35%,#3B7FFF 60%,#7C6BF0);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 4px 16px rgba(59,127,255,.3);position:relative}
 .ai-mic-in{position:absolute;inset:3px;border-radius:24px;background:linear-gradient(180deg,#C4E2FF,#7BB8FF 30%,#6B8FFF 60%,#9B8BF4)}
 .ai-disc{text-align:center;margin-top:8px;font-size:9px;color:#B0B8C8;padding-bottom:2px}
-.ai-home-ind{display:flex;justify-content:center;padding:6px 0 4px}
-.ai-home-ind div{width:120px;height:4px;border-radius:3px;background:#1A1A2E}
+/* ========== AI CHAT PAGE ========== */
+.chat-page{background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 8%,#E5DDF5 18%,#EDE5F5 30%,#F5F6FA 50%)}
+.chat-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column}
+.chat-status{display:flex;justify-content:space-between;align-items:center;padding:42px 20px 4px;color:#1A1A2E;font-size:14px;font-weight:600}
+.chat-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 10px}
+.chat-nav-left{display:flex;align-items:center;gap:5px;cursor:pointer}
+.chat-nav-left span{font-size:16px;font-weight:700;color:#1A1A2E}
+.chat-nav-center{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-radius:16px;padding:3px 12px 3px 4px;cursor:pointer;position:relative}
+.chat-nav-center-avatar{width:22px;height:22px;border-radius:11px;background:linear-gradient(135deg,#E8D4F8,#D0C4F0);display:flex;align-items:center;justify-content:center;font-size:11px;position:relative}
+.chat-nav-center-badge{position:absolute;top:-5px;right:-5px;background:#FF4757;color:#fff;width:14px;height:14px;border-radius:7px;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff}
+.chat-nav-center span{font-size:11px;font-weight:600;color:#1A1A2E}
+.chat-nav-menu{width:36px;height:36px;border-radius:10px;background:rgba(255,255,255,.6);backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* Chat messages */
+.chat-messages{flex:1;padding:8px 14px;display:flex;flex-direction:column;gap:12px}
+.chat-bubble-right{align-self:flex-end;max-width:70%}
+.chat-bubble-right .chat-b{background:linear-gradient(135deg,#56B4FF,#3B7FFF);color:#fff;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600;box-shadow:0 2px 8px rgba(59,127,255,.2)}
+/* Full-width left bubble */
+.chat-bubble-full{align-self:stretch}
+.chat-bubble-full .chat-b{background:rgba(255,255,255,.92);color:#1A1A2E;border-radius:14px;padding:14px;font-size:12.5px;line-height:1.7;border:1px solid #EFF1F5}
+
+/* Combined section: customer card + analysis text in one bordered box */
+.chat-section{align-self:stretch;background:rgba(255,255,255,.92);border-radius:14px;border:1px solid #EFF1F5;overflow:hidden}
+
+/* Customer card inside section — almost full width, with subtle bg */
+.chat-customer{background:#fff;border-radius:12px;margin:10px 10px 0;padding:12px;border:1px solid #EFF1F5}
+.chat-cust-top{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.chat-cust-avatar{width:36px;height:36px;border-radius:18px;background:linear-gradient(135deg,#E8D4F8,#D0C4F0);display:flex;align-items:center;justify-content:center;font-size:16px}
+.chat-cust-info{flex:1}
+.chat-cust-name{font-size:14px;font-weight:700;color:#1A1A2E;display:flex;align-items:center;gap:6px}
+.chat-cust-name .chat-phone{width:18px;height:18px;border-radius:9px;background:#E8F8EE;display:flex;align-items:center;justify-content:center}
+.chat-cust-meta{font-size:10px;color:#8A95A8;margin-top:2px}
+.chat-cust-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:8px}
+.chat-cust-action{font-size:12px;font-weight:600;color:#1A1A2E}
+.chat-cust-commission{font-size:16px;font-weight:800;color:#FF4757}
+.chat-cust-commission span{font-size:10px;font-weight:500;color:#8A95A8;margin-left:3px}
+
+/* Analysis text inside section — no border, just padding */
+.chat-section-text{padding:12px 14px;font-size:12px;color:#1A1A2E;line-height:1.65}
+
+/* Prompt section: "立刻解锁" + quick reply in one bordered box */
+.chat-prompt-section{align-self:stretch;background:rgba(255,255,255,.92);border-radius:14px;border:1px solid #EFF1F5;padding:14px}
+.chat-prompt-section .chat-prompt-text{font-size:12.5px;color:#1A1A2E;line-height:1.6;margin-bottom:10px}
+.chat-quick{display:flex;align-items:center;gap:8px;padding-top:8px}
+.chat-quick-label{font-size:11px;color:#8A95A8}
+.chat-quick-btn{background:#fff;border:1.5px solid #3B7FFF;color:#3B7FFF;font-size:12px;font-weight:600;padding:5px 16px;border-radius:14px;cursor:pointer}
+
+/* Chat bottom */
+.chat-bottom{padding:8px 16px 12px;background:#F5F6FA;flex-shrink:0}
+/* ========== QUOTE PAGE ========== */
+.quote-page{background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 8%,#E5DDF5 18%,#EDE5F5 30%,#F5F6FA 50%)}
+.quote-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.quote-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 10px}
+.quote-nav-left{display:flex;align-items:center;gap:5px;cursor:pointer}
+.quote-nav-left span{font-size:16px;font-weight:700;color:#1A1A2E}
+
+/* User bubble in quote page */
+.quote-user-bubble{margin:0 14px 10px;align-self:flex-end;display:flex;justify-content:flex-end}
+.quote-user-bubble .chat-b{background:linear-gradient(135deg,#56B4FF,#3B7FFF);color:#fff;border-radius:14px;padding:10px 14px;font-size:13px;font-weight:600;display:inline-block}
+
+/* AI text block */
+.quote-ai-text{margin:0 14px 10px;background:rgba(255,255,255,.92);border-radius:14px;padding:14px;font-size:12.5px;color:#1A1A2E;line-height:1.7;border:1px solid #EFF1F5}
+
+/* Outer wrapper — scrollable, with arrow overlay */
+.quote-outer{margin:0 14px 10px;border-radius:16px;background:rgba(255,255,255,.92);border:1px solid #EFF1F5;padding:14px;position:relative}
+.quote-outer-intro{font-size:12.5px;color:#1A1A2E;line-height:1.7;margin-bottom:12px}
+
+/* Inner blue card — overflow visible for PK */
+.quote-card{border-radius:14px;overflow:visible;background:linear-gradient(180deg,#4A9FE8 0%,#6AB5F0 30%,#A5D4F8 60%,#EFF5FC 100%);box-shadow:0 4px 20px rgba(74,159,232,.2);margin:0;position:relative}
+.quote-card-header{padding:12px 14px 10px;position:relative}
+.quote-card-header-title{font-size:14px;font-weight:800;color:#fff}
+.quote-card-header-sub{font-size:10px;color:rgba(255,255,255,.85);margin-top:2px}
+.quote-card-coin{
+  position:absolute;top:8px;right:14px;width:38px;height:38px;border-radius:19px;
+  background:linear-gradient(145deg,#7CC8FF 0%,#4A9FE8 40%,#2878D0 100%);
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;font-weight:700;color:#fff;
+  box-shadow:
+    0 4px 12px rgba(40,120,208,.4),
+    0 1px 3px rgba(0,0,0,.15),
+    inset 0 2px 4px rgba(255,255,255,.35),
+    inset 0 -2px 4px rgba(0,0,0,.1);
+  text-shadow:0 1px 2px rgba(0,0,0,.2);
+}
+.quote-compare{position:relative;padding:0 10px 10px;overflow:hidden;border-radius:0 0 14px 14px}
+.quote-cols{display:flex;gap:6px}
+
+/* Columns */
+.quote-col{flex:1;background:rgba(255,255,255,.92);border-radius:12px;padding:0 8px 10px;border:1.5px solid #D8E2F0;position:relative;overflow:hidden}
+.quote-col.recommended{border:2px solid #3B7FFF;background:#fff}
+
+/* Tab title — inside the column top */
+.quote-col-title{
+  text-align:center;font-size:11px;font-weight:600;color:#5A6580;
+  padding:8px 0 6px;margin:0 -8px;
+  background:rgba(245,248,252,.9);
+  border-bottom:1.5px solid #D8E2F0;
+}
+.quote-col.recommended .quote-col-title{
+  background:linear-gradient(135deg,#3B7FFF,#56B4FF);
+  color:#fff;
+  border-bottom:2px solid #3B7FFF;
+}
+
+.quote-col-price{text-align:center;font-size:20px;font-weight:800;color:#1A1A2E;padding:8px 0 6px}
+.quote-col.recommended .quote-col-price{color:#FF6B35}
+/* Taller rows so first screen cuts at 三者医保外用药 */
+.quote-row{padding:10px 0;border-bottom:1px solid #F0F2F5}
+.quote-row:last-child{border-bottom:none}
+/* Left column: dark text, name bold+larger, val normal+smaller */
+.quote-row-name{font-size:11px;font-weight:700;color:#1A1A2E}
+.quote-row-val{font-size:9.5px;font-weight:400;color:#1A1A2E;margin-top:1px}
+/* Right column (recommended): deep blue for both */
+.quote-col.recommended .quote-row-name{font-size:11px;font-weight:700;color:#1A5CB0}
+.quote-col.recommended .quote-row-val{font-size:9.5px;font-weight:400;color:#1A5CB0}
+
+/* Forward buttons at bottom of columns */
+.quote-fwd-btn{
+  display:block;width:100%;margin-top:8px;padding:8px 0;
+  border-radius:20px;font-size:11px;font-weight:600;
+  text-align:center;cursor:pointer;
+}
+.quote-fwd-btn.outline{background:transparent;border:1.5px solid #C8D0DC;color:#5A6580}
+.quote-fwd-btn.fill{background:linear-gradient(135deg,#3B7FFF,#1A6FE8);border:none;color:#fff;box-shadow:0 2px 8px rgba(59,127,255,.25)}
+
+/* PK badge — fixed on the card, aligned with 乘客险, doesn't scroll */
+.quote-pk-fixed{
+  position:absolute;left:50%;transform:translateX(-50%);
+  z-index:10;
+  pointer-events:none;
+}
+.quote-pk-badge{width:30px;height:30px;border-radius:15px;background:linear-gradient(135deg,#56B4FF,#3B7FFF);color:#fff;font-size:9px;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 4px rgba(255,255,255,.85),0 2px 10px rgba(59,127,255,.3)}
+
+/* "修改报价" inside the card */
+.quote-modify-inner{text-align:right;padding:4px 14px 8px;font-size:11px;color:#3B7FFF;font-weight:600;cursor:pointer}
+
+/* Arrow — fixed on page (not scrollable), centered */
+.quote-arrow-page{
+  position:absolute;left:50%;transform:translateX(-50%);
+  bottom:140px;
+  width:30px;height:30px;border-radius:15px;
+  background:#fff;border:2px solid #D8E2F0;
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  cursor:pointer;z-index:20;
+  transition:opacity .3s,transform .3s;
+}
+.quote-arrow-page.hidden{opacity:0;transform:translateX(-50%) scale(.8);pointer-events:none}
+
+/* Disclaimer — single line */
+.quote-disc{text-align:center;margin-top:6px;font-size:8px;color:#8A95A8;padding:4px 6px 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* Quote bottom bar */
+.quote-tags{display:flex;gap:6px;padding:8px 14px;overflow-x:auto;scrollbar-width:none}
+.quote-tags::-webkit-scrollbar{display:none}
+.quote-tag{flex-shrink:0;display:flex;align-items:center;gap:4px;background:#fff;border:1px solid #E8ECF0;border-radius:18px;padding:6px 12px;font-size:11px;color:#5A6580;font-weight:500;cursor:pointer}
+.quote-input-row{margin:6px 14px 0;display:flex;align-items:center;gap:8px;background:#fff;border-radius:24px;padding:8px 14px;border:1px solid #E8ECF0}
+.quote-input-row svg{flex-shrink:0}
+.quote-input-row span{font-size:12px;color:#B0B8C8;flex:1}
+/* ========== 成交秘籍页 ========== */
+.secret-page{background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 8%,#E5DDF5 18%,#EDE5F5 30%,#F5F6FA 50%)}
+.secret-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.secret-msgs{padding:8px 14px;display:flex;flex-direction:column;gap:10px}
+
+/* AI profile text */
+.secret-ai-block{background:rgba(255,255,255,.92);border-radius:14px;padding:12px 14px;font-size:12px;color:#1A1A2E;line-height:1.7;border:1px solid #EFF1F5}
+
+/* Tabs + policy card section */
+.secret-card{background:rgba(255,255,255,.92);border-radius:14px;border:1px solid #EFF1F5;padding:12px;overflow:hidden}
+.secret-tabs{display:flex;gap:0;margin-bottom:10px;overflow-x:auto;scrollbar-width:none}
+.secret-tabs::-webkit-scrollbar{display:none}
+.secret-tab{flex-shrink:0;padding:4px 8px;font-size:9px;font-weight:500;color:#8A95A8;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.secret-tab.act{color:#FF4757;font-weight:700;border-bottom-color:#FF4757}
+.secret-policy{background:#fff;border-radius:10px;border:1px solid #EFF1F5;padding:10px 12px}
+.secret-policy-hd{display:flex;align-items:center;gap:6px;margin-bottom:8px}
+.secret-policy-icon{width:18px;height:18px;border-radius:4px;background:#3B7FFF;display:flex;align-items:center;justify-content:center}
+.secret-policy-title{font-size:11px;font-weight:700;color:#1A1A2E}
+.secret-policy-row{display:flex;justify-content:space-between;padding:4px 0;font-size:9px;color:#5A6580}
+.secret-policy-row strong{font-weight:700;color:#1A1A2E}
+
+/* Action icons row */
+.secret-actions{display:flex;gap:14px;padding:6px 0}
+.secret-act-icon{width:24px;height:24px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* Product recommendation */
+.secret-recommend{display:flex;align-items:baseline;justify-content:space-between;gap:6px}
+.secret-recommend-text{font-size:12px;color:#1A1A2E;font-weight:600}
+.secret-recommend-link{font-size:10px;color:#3B7FFF;font-weight:600;cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:2px}
+.secret-analysis{font-size:12px;color:#1A1A2E;line-height:1.7}
+
+/* Poster cards */
+.secret-posters{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px 0}
+.secret-posters::-webkit-scrollbar{display:none}
+.secret-poster{flex-shrink:0;width:120px;border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.secret-poster-img{width:120px;height:150px;background:linear-gradient(135deg,#E84040,#D43030);display:flex;align-items:center;justify-content:center;font-size:28px;color:#fff;font-weight:800;position:relative}
+.secret-poster-img.v2{background:linear-gradient(135deg,#C62828,#E53935)}
+.secret-poster-img.v3{background:linear-gradient(135deg,#1565C0,#1E88E5)}
+.secret-poster-badge{position:absolute;top:6px;right:6px;background:rgba(0,0,0,.3);color:#fff;font-size:7px;padding:2px 5px;border-radius:3px}
+.secret-poster-foot{padding:6px 8px;font-size:9px;color:#5A6580}
+
+/* Inner bordered section: tabs + policy */
+.secret-inner{border:1.5px solid #E8ECF0;border-radius:12px;padding:10px;position:relative;margin-top:18px}
+.secret-inner-tag{position:absolute;top:-12px;left:12px}
+.secret-inner-tag span{background:#FF4757;color:#fff;font-size:8px;padding:3px 8px;border-radius:8px;font-weight:600}
+
+/* Nav inline inside input row — 2/3 width */
+.secret-nav-inline{display:flex;align-items:center;gap:8px;width:66%;background:#F0F3F8;border-radius:18px;padding:6px 10px}
+.secret-nav-label{font-size:9px;color:#1A1A2E;font-weight:600;white-space:nowrap}
+.secret-nav-btns{display:flex;gap:6px;margin-left:auto}
+.secret-nav-btn{width:22px;height:22px;border-radius:11px;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer}
+
+/* Bottom bar */
+.secret-bottom{flex-shrink:0;background:#F5F6FA;padding:6px 14px 10px}
+.secret-input-outer{background:#fff;border-radius:22px;border:1px solid #E8ECF0;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.secret-input-top{display:flex;align-items:center;gap:8px}
+.secret-input-top svg{flex-shrink:0}
+.secret-input-top span{font-size:11px;color:#B0B8C8;flex:1}
+.secret-send{width:30px;height:30px;border-radius:15px;background:linear-gradient(135deg,#3B7FFF,#1A6FE8);display:flex;align-items:center;justify-content:center;flex-shrink:0}
 </style>
 </head>
 <body>
@@ -208,44 +608,73 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
     <div class="phone-screen">
       <div class="app" id="app">
 
-<!-- ============ HOME PAGE ============ -->
+<!-- ============ APP首页 ============ -->
 <div class="page active" id="homePage">
-  <div class="h-scroll">
-    <!-- Status -->
-    <div class="h-status">
-      <span>09:16</span>
+  <!-- Fixed top: status + header -->
+  <div class="h-fixed-top" id="hFixedTop">
+    <div class="h-status" id="hStatus">
+      <span>09:33</span>
       <div style="display:flex;align-items:center;gap:4px">
-        <span style="font-size:9px">312 K/s</span>
-        <span style="font-size:11px">📶</span>
-        <span style="font-size:10px;background:rgba(255,255,255,.2);padding:1px 5px;border-radius:6px">59</span>
+        <span style="font-size:9px">1.1 K/s</span>
+        <svg width="14" height="10" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3.5 1 5.5L2.5 7c1.2-1.5 3.2-2.5 5.5-2.5S12.3 5.5 13.5 7L15 5.5C13.5 3.5 11 2 8 2z" fill="white"/><circle cx="8" cy="10.5" r="1.5" fill="white"/></svg>
+        <svg width="16" height="12" viewBox="0 0 20 14" fill="none"><rect x="1" y="4" width="3" height="10" rx="0.5" fill="white"/><rect x="5.5" y="2.5" width="3" height="11.5" rx="0.5" fill="white"/><rect x="10" y="1" width="3" height="13" rx="0.5" fill="white"/><rect x="14.5" y="0" width="3" height="14" rx="0.5" fill="white"/></svg>
+        <span class="h-status-battery" style="font-size:10px;background:rgba(255,255,255,.2);padding:1px 5px;border-radius:6px">68</span>
       </div>
     </div>
-    <!-- Header -->
-    <div class="h-header">
-      <div class="h-search-row">
-        <div class="h-avatar">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="white" stroke-width="1.5"/><path d="M5 20c0-3.5 3-6.5 7-6.5s7 3 7 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <div class="h-avatar-badge">成为代理人</div>
-        </div>
-        <div class="h-searchbar">
-          <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#C0C8D8" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="#C0C8D8" stroke-width="1.5" stroke-linecap="round"/></svg>
-          <span>学平险</span>
-          <div class="h-search-ai"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="7" r="1.5" fill="white"/><circle cx="10" cy="7" r="1.5" fill="white"/><path d="M6 10.5c1 1 3 1 4 0" stroke="white" stroke-width="1" stroke-linecap="round"/></svg></div>
-        </div>
-        <div class="h-icons">
-          <div class="h-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="white" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-          <div class="h-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3a5 5 0 015 5v3l2 2H3l2-2V8a5 5 0 015-5z" stroke="white" stroke-width="1.5"/><path d="M8 15a2 2 0 004 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-          <div class="h-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.5"/><path d="M7 9h6M7 12h4" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+    <!-- Default: avatar + search + icons -->
+    <div class="h-header-default">
+      <div class="h-header">
+        <div class="h-search-row">
+          <div class="h-avatar">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="9" r="4" stroke="white" stroke-width="1.5"/><path d="M5 20c0-3.5 3-6.5 7-6.5s7 3 7 6.5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div class="h-avatar-badge">团队长</div>
+          </div>
+          <div class="h-searchbar">
+            <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="8" cy="8" r="5.5" stroke="#C0C8D8" stroke-width="1.5"/><path d="M12.5 12.5L16 16" stroke="#C0C8D8" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <span>学平险</span>
+            <div class="h-search-ai"><svg width="12" height="12" viewBox="0 0 16 16" fill="none"><circle cx="6" cy="7" r="1.5" fill="white"/><circle cx="10" cy="7" r="1.5" fill="white"/><path d="M6 10.5c1 1 3 1 4 0" stroke="white" stroke-width="1" stroke-linecap="round"/></svg></div>
+          </div>
+          <div class="h-icons">
+            <div class="h-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="white" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+            <div class="h-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 3a5 5 0 015 5v3l2 2H3l2-2V8a5 5 0 015-5z" stroke="white" stroke-width="1.5"/><path d="M8 15a2 2 0 004 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+            <div class="h-icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><rect x="3" y="4" width="14" height="12" rx="2" stroke="white" stroke-width="1.5"/><path d="M7 9h6M7 12h4" stroke="white" stroke-width="1.2" stroke-linecap="round"/></svg></div>
+          </div>
         </div>
       </div>
     </div>
+    <!-- Compact: grid icons + mascot + action icons -->
+    <div class="h-header-compact">
+      <div class="h-compact-inner">
+        <div class="h-compact-left">
+          <!-- 智能报价 -->
+          <div class="h-compact-icon"><svg width="26" height="26" viewBox="0 0 30 30" fill="none"><rect x="3" y="5" width="24" height="20" rx="2.5" stroke="#1A1A2E" stroke-width="1.8"/><path d="M3 10h24" stroke="#1A1A2E" stroke-width="1.8"/><path d="M8 15h3M8 19h5" stroke="#1A1A2E" stroke-width="1.4" stroke-linecap="round"/><text x="21" y="19" text-anchor="middle" fill="#1A1A2E" font-size="8" font-weight="700">+-×</text></svg></div>
+          <!-- 非车拼团 -->
+          <div class="h-compact-icon"><svg width="26" height="26" viewBox="0 0 30 30" fill="none"><circle cx="11" cy="12" r="4" stroke="#1A1A2E" stroke-width="1.8"/><path d="M5 24c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="#1A1A2E" stroke-width="1.8" stroke-linecap="round"/><circle cx="20" cy="14" r="2.5" stroke="#3B7FFF" stroke-width="1.5"/><text x="20" y="22" text-anchor="middle" fill="#3B7FFF" font-size="7" font-weight="800">拼</text></svg></div>
+          <!-- 智能保顾 DeepSeek -->
+          <div class="h-compact-icon" style="position:relative" onclick="navigateTo('aiPage')"><svg width="26" height="26" viewBox="0 0 30 30" fill="none"><rect x="4" y="3" width="22" height="24" rx="3" stroke="#1A1A2E" stroke-width="1.8"/><text x="15" y="19" text-anchor="middle" fill="#1A1A2E" font-size="13" font-weight="800">智</text></svg><span style="position:absolute;top:-2px;right:-6px;background:#FF4757;color:#fff;font-size:6px;padding:1px 3px;border-radius:3px;font-weight:700">新</span><span style="position:absolute;bottom:-1px;right:-8px;font-size:5px;color:#3B7FFF;font-weight:700">DeepSeek</span></div>
+        </div>
+        <!-- Mascot -->
+        <div class="h-compact-mascot">🤖</div>
+        <div class="h-compact-right">
+          <!-- 编辑/分享 -->
+          <div class="h-compact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="14" height="14" rx="2" stroke="#1A1A2E" stroke-width="1.8"/><path d="M10 3h8a3 3 0 013 3v8" stroke="#1A1A2E" stroke-width="1.8" stroke-linecap="round"/><path d="M8 10l2-5 2 5M9 9h2" stroke="#1A1A2E" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <!-- 铃铛 -->
+          <div class="h-compact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M12 3a6 6 0 016 6v4l2 2H4l2-2V9a6 6 0 016-6z" stroke="#1A1A2E" stroke-width="1.8"/><path d="M9 17a3 3 0 006 0" stroke="#1A1A2E" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+          <!-- IM -->
+          <div class="h-compact-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="#1A1A2E" stroke-width="1.8"/><text x="12" y="15.5" text-anchor="middle" fill="#1A1A2E" font-size="8.5" font-weight="700">IM</text></svg></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scrollable content -->
+  <div class="h-scroll">
     <!-- Quick Nav -->
     <div class="h-qnav">
       <div class="h-qnav-item"><div class="h-qnav-icon"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><path d="M6 16h16M8 12l2-5h8l2 5M7 16v2.5h3.5V16M17.5 16v2.5H21V16M7 12h14v4H7z" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="h-qnav-lbl">车险投保</span></div>
       <div class="h-qnav-item"><div class="h-qnav-icon"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#3B7FFF" stroke-width="1.5"/><circle cx="14" cy="14" r="4" stroke="#3B7FFF" stroke-width="1.5"/><path d="M14 4v3M14 21v3M4 14h3M21 14h3" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="h-qnav-lbl">朋友圈助手</span></div>
       <div class="h-qnav-item"><div class="h-qnav-icon"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect x="5" y="3" width="18" height="22" rx="2" stroke="#3B7FFF" stroke-width="1.5"/><text x="14" y="18" text-anchor="middle" fill="#3B7FFF" font-size="12" font-weight="700">¥</text></svg></div><span class="h-qnav-lbl">理赔中心</span></div>
       <div class="h-qnav-item"><div class="h-qnav-icon"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect x="4" y="6" width="20" height="16" rx="3" stroke="#3B7FFF" stroke-width="1.5"/><path d="M12 11l5 3-5 3V11z" fill="#3B7FFF"/></svg></div><span class="h-qnav-lbl">数字营销</span></div>
-      <div class="h-qnav-item"><div class="h-qnav-icon"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect x="5" y="3" width="15" height="20" rx="2" stroke="#3B7FFF" stroke-width="1.5"/><path d="M9 8h7M9 12h7M9 16h4" stroke="#3B7FFF" stroke-width="1.2" stroke-linecap="round"/><circle cx="20" cy="20" r="4" stroke="#3B7FFF" stroke-width="1.5"/><path d="M23 23l2 2" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="h-qnav-lbl">保单查询</span></div>
+      <div class="h-qnav-item"><div class="h-qnav-icon"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect x="5" y="5" width="18" height="18" rx="3" stroke="#3B7FFF" stroke-width="1.5"/><circle cx="14" cy="11" r="3" stroke="#3B7FFF" stroke-width="1.5"/><path d="M9 20c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/></svg></div><span class="h-qnav-lbl">我的名片</span></div>
     </div>
     <!-- Banner -->
     <div class="h-banner">
@@ -254,66 +683,63 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
         <div class="h-banner-title">首届万粉创星会</div>
         <div class="h-banner-sub">迎战月度挑战赛，冲击全国<span style="color:#FFD700;font-weight:700">创星榜</span></div>
       </div>
-      <div style="width:60px;height:60px;border-radius:30px;background:rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:28px">🤖</div>
+      <div style="width:68px;height:68px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative">🤖<div style="position:absolute;top:-2px;right:-4px;font-size:20px">🏆</div></div>
     </div>
-    <!-- Grid -->
-    <div class="h-grid">
-      <div class="h-grid-row">
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><circle cx="10" cy="10" r="5" stroke="#3B7FFF" stroke-width="2"/><path d="M3 22c0-4 3-7 7-7s7 3 7 7" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/><path d="M20 8v6M17 11h6" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/></svg></div><span class="h-grid-lbl">加入创保网</span></div>
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="3" y="6" width="20" height="14" rx="2" stroke="#3B7FFF" stroke-width="2"/><path d="M3 10h20" stroke="#3B7FFF" stroke-width="2"/><text x="13" y="20" text-anchor="middle" fill="#3B7FFF" font-size="10" font-weight="700">¥</text></svg></div><span class="h-grid-lbl">热门产品</span></div>
-        <div class="h-grid-item" onclick="navigateTo('aiPage')"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="3" y="3" width="20" height="20" rx="5" fill="#3B7FFF"/><text x="13" y="17" text-anchor="middle" fill="white" font-size="10" font-weight="800">智</text></svg><span class="h-new">NEW</span></div><span class="h-grid-lbl">智能保顾</span></div>
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="4" y="10" width="18" height="12" rx="2" stroke="#3B7FFF" stroke-width="2"/><path d="M13 10v12M4 14h18" stroke="#3B7FFF" stroke-width="2"/></svg></div><span class="h-grid-lbl">客户礼包</span></div>
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><circle cx="13" cy="9" r="4" stroke="#3B7FFF" stroke-width="2"/><path d="M6 22c0-4 3-7 7-7s7 3 7 7" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/></svg></div><span class="h-grid-lbl">增员助手</span></div>
-      </div>
-      <div class="h-grid-row">
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><path d="M13 22s-7-5-7-10c0-3 2-5 4.5-5 1.5 0 2.5 1 2.5 1s1-1 2.5-1c2.5 0 4.5 2 4.5 5 0 5-7 10-7 10z" stroke="#3B7FFF" stroke-width="2" fill="none"/></svg></div><span class="h-grid-lbl">涨粉助手</span></div>
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="4" y="8" width="18" height="12" rx="2" stroke="#3B7FFF" stroke-width="2"/><path d="M4 12h18" stroke="#3B7FFF" stroke-width="2"/><text x="13" y="21" text-anchor="middle" fill="#3B7FFF" font-size="9" font-weight="700">¥</text></svg></div><span class="h-grid-lbl">商机管理</span></div>
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="3" y="5" width="20" height="16" rx="2" stroke="#3B7FFF" stroke-width="2"/><line x1="7" y1="10" x2="12" y2="10" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/><line x1="7" y1="14" x2="19" y2="14" stroke="#3B7FFF" stroke-width="2" stroke-linecap="round"/></svg></div><span class="h-grid-lbl">非车潜客</span></div>
-        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="4" y="4" width="18" height="18" rx="4" fill="#3B7FFF"/><text x="13" y="17" text-anchor="middle" fill="white" font-size="9" font-weight="800">VS</text></svg></div><span class="h-grid-lbl">比价线索</span></div>
+    <!-- Grid - 1 row: 智能报价, 非车拼团, 智能保顾, 客户礼包, 更多 -->
+    <div class="h-grid" style="padding:14px 8px 14px">
+      <div class="h-grid-row" style="margin-bottom:0">
+        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="3" y="5" width="20" height="16" rx="2" stroke="#3B7FFF" stroke-width="1.8"/><path d="M3 9h20" stroke="#3B7FFF" stroke-width="1.8"/><path d="M8 13h4M8 16h7M16 13h3" stroke="#3B7FFF" stroke-width="1.3" stroke-linecap="round"/></svg></div><span class="h-grid-lbl">智能报价</span></div>
+        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><circle cx="9" cy="10" r="4" stroke="#3B7FFF" stroke-width="1.8"/><circle cx="17" cy="10" r="4" stroke="#3B7FFF" stroke-width="1.8"/><path d="M5 22c0-3 2-5.5 4.5-5.5 1.5 0 2.5.5 3.5 1.5 1-1 2-1.5 3.5-1.5 2.5 0 4.5 2.5 4.5 5.5" stroke="#3B7FFF" stroke-width="1.8" stroke-linecap="round"/></svg></div><span class="h-grid-lbl">非车拼团</span></div>
+        <div class="h-grid-item" onclick="navigateTo('aiPage')"><div class="h-grid-icon" style="background:#EBF3FF;position:relative"><svg width="22" height="22" viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" rx="5" fill="#3B7FFF"/><text x="14" y="19" text-anchor="middle" fill="white" font-size="12" font-weight="800">智</text></svg><span style="position:absolute;bottom:-2px;right:-2px;background:linear-gradient(135deg,#7C3AED,#5B21B6);color:#fff;font-size:6px;padding:1px 3px;border-radius:3px;font-weight:700;letter-spacing:.3px">DeepSeek</span></div><span class="h-grid-lbl">智能保顾</span></div>
+        <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><rect x="4" y="10" width="18" height="12" rx="2" stroke="#3B7FFF" stroke-width="1.8"/><path d="M13 10v12M4 14h18" stroke="#3B7FFF" stroke-width="1.8"/><path d="M10 10L13 5l3 5" stroke="#3B7FFF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></div><span class="h-grid-lbl">客户礼包</span></div>
         <div class="h-grid-item"><div class="h-grid-icon"><svg width="20" height="20" viewBox="0 0 26 26" fill="none"><circle cx="8" cy="10" r="2.5" fill="#3B7FFF"/><circle cx="18" cy="10" r="2.5" fill="#3B7FFF"/><circle cx="8" cy="18" r="2.5" fill="#3B7FFF"/><circle cx="18" cy="18" r="2.5" fill="#3B7FFF"/></svg></div><span class="h-grid-lbl">更多</span></div>
       </div>
     </div>
     <!-- Tools -->
     <div class="h-tools">
-      <div class="h-tool" style="background:linear-gradient(135deg,#E8F5E9,#C8E6C9)"><div><span style="font-size:12px;font-weight:700;color:#2E7D32">快签到</span><br><span style="background:#4CAF50;color:#fff;font-size:7px;padding:1px 3px;border-radius:3px">GO</span></div><div style="font-size:18px">🐵</div></div>
-      <div class="h-tool" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:11px;font-weight:600;color:#333">AI跟拍</div><div style="font-size:9px;color:#999">精选模板</div></div><div style="font-size:18px">📸</div></div>
-      <div class="h-tool" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:11px;font-weight:600;color:#333">数字营销</div><div style="font-size:9px;color:#999">创星计划</div></div><div style="font-size:18px">🎬</div></div>
-      <div class="h-tool" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:11px;font-weight:600;color:#333">智能海报</div><div style="font-size:9px;color:#999">一键生成</div></div><div style="font-size:18px">🎨</div></div>
+      <div class="h-tool" style="background:linear-gradient(135deg,#FFF8F0,#FFECD2);min-width:110px"><div><span style="font-size:12px;font-weight:700;color:#E67E22">每日签到</span><br><span style="font-size:9px;color:#FF6B35">今日<span style="color:#FF4757;font-weight:600">未签到</span></span></div><div style="font-size:22px">🎁</div></div>
+      <div class="h-tool" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:11px;font-weight:600;color:#333">AI跟拍</div><div style="font-size:9px;color:#999">精选模板</div></div><div style="font-size:22px">📸</div></div>
+      <div class="h-tool" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:11px;font-weight:600;color:#333">数字营销</div><div style="font-size:9px;color:#999">创星计划</div></div><div style="font-size:22px">🎬</div></div>
+      <div class="h-tool" style="background:#FFF;border:1px solid #F0F0F0"><div><div style="font-size:11px;font-weight:600;color:#333">智能海报</div><div style="font-size:9px;color:#999">一键生成</div></div><div style="font-size:22px">🎨</div></div>
     </div>
 
-    <!-- ===== AGENT SECTION (Corrected: banner+tabs+content in ONE card) ===== -->
-    <div class="h-agent">
-      <!-- Banner row: mascot + greeting + task button -->
-      <div class="h-agent-banner">
+    <!-- ===== AGENT SECTION ===== -->
+    <div class="h-agent" style="margin-top:22px">
+      <!-- Floating tag: mascot + bubble + task btn (overlaps top) -->
+      <div class="h-agent-float">
         <div class="h-agent-mascot">🐨</div>
-        <div class="h-agent-greeting"></div>
+        <div class="h-agent-bubble">
+          <span>🎁</span>
+          <span>您还有未领取的奖励哦~</span>
+        </div>
         <div class="h-agent-task">
-          <svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 015 5v2.5l1.5 1.5H2.5L4 9.5V7a5 5 0 015-5z" stroke="white" stroke-width="1.5"/><path d="M7 13a2 2 0 004 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <svg width="13" height="13" viewBox="0 0 18 18" fill="none"><path d="M9 2a5 5 0 015 5v2.5l1.5 1.5H2.5L4 9.5V7a5 5 0 015-5z" stroke="white" stroke-width="1.5"/><path d="M7 13a2 2 0 004 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg>
           任务待办 ›
-          <div class="h-agent-task-badge">51</div>
+          <div class="h-agent-task-badge">62</div>
         </div>
       </div>
-      <!-- Tab row (inside same card) -->
+      <!-- Tab row -->
       <div class="h-agent-tabs" id="agentTabs">
-        <div class="h-agent-tab active" onclick="switchAgentTab(0)">小微续保</div>
-        <div class="h-agent-tab" onclick="switchAgentTab(1)">非车续保</div>
-        <div class="h-agent-tab" onclick="switchAgentTab(2)">潜客资源</div>
-        <div class="h-agent-tab" onclick="switchAgentTab(3)">潜客挖掘</div>
+        <div class="h-agent-tab active" onclick="switchAgentTab(0)">车险续保</div>
+        <div class="h-agent-tab" onclick="switchAgentTab(1)">小微续保</div>
+        <div class="h-agent-tab" onclick="switchAgentTab(2)">非车续保</div>
+        <div class="h-agent-tab" onclick="switchAgentTab(3)">潜客资源</div>
       </div>
-      <!-- Content (inside same card) -->
+      <!-- Content -->
       <div class="h-agent-body" id="agentBody">
-        <div class="h-agent-card">
-          <div class="h-agent-card-hd">
-            <div class="h-agent-card-icon">📊</div>
-            <span class="h-agent-card-title">团队小微脱保续回</span>
-            <span class="h-agent-card-tag">3月22日到期</span>
+        <div class="h-agent-card" style="background:#F8FAFE;position:relative">
+          <div style="position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:10px;background:#F0F2F5;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#999">✕</div>
+          <div style="margin-bottom:8px">
+            <span style="font-size:16px;font-weight:800;color:#1A1A2E;letter-spacing:.5px">陕A-2T86Q</span>
+            <span style="font-size:9px;color:#3B7FFF;background:#EBF3FF;padding:2px 6px;border-radius:3px;margin-left:8px;font-weight:600">投:常玲</span>
           </div>
-          <div class="h-agent-card-bd">
-            <div><h3>成员王武春的续保单已经脱保啦</h3><p>立即前往完成任务</p></div>
-            <button class="h-remind-btn">提醒成员</button>
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+            <span style="font-size:12px;color:#8A95A8">上年¥522.5</span>
+            <button class="h-remind-btn" style="padding:6px 16px">联系/反馈</button>
           </div>
+          <div style="font-size:11px;color:#8A95A8">立即前往完成任务</div>
         </div>
-        <div class="h-agent-dots"><div class="h-agent-dot"></div><div class="h-agent-dot active"></div></div>
+        <div class="h-agent-dots"><div class="h-agent-dot active" style="width:18px"></div><div class="h-agent-dot"></div></div>
       </div>
     </div>
 
@@ -323,27 +749,28 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
       <div class="h-activity-cards">
         <div class="h-act-card" style="background:linear-gradient(135deg,#FFF8F0,#FFECD2)">
           <div class="h-act-badge">进行中</div>
-          <div style="font-size:13px;font-weight:700;color:#E67E22;margin-bottom:3px">每日签到赢锦鲤</div>
+          <div style="font-size:13px;font-weight:700;color:#E67E22;margin-bottom:3px">每日签到赢<span style="color:#E74C3C">锦鲤</span></div>
           <div style="font-size:10px;color:#666">签到中奖送宝币</div>
         </div>
         <div class="h-act-card" style="background:linear-gradient(135deg,#FFF0F0,#FFD6D6)">
           <div class="h-act-badge">进行中</div>
           <div style="font-size:13px;font-weight:700;color:#E74C3C;margin-bottom:3px">团非3月活动</div>
-          <div style="font-size:10px;color:#666">拓新单维老客 奖励赢不停</div>
+          <div style="font-size:10px;color:#666">拓新单续老客 奖励赢不停</div>
         </div>
       </div>
     </div>
   </div>
-  <!-- Tab Bar (pinned at bottom) -->
+  <!-- Tab Bar (5 tabs: 首页, 非车, 团队, 学习, 我的) -->
   <div class="h-tabbar">
     <div class="h-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 10l8-7 8 7v9a1 1 0 01-1 1H5a1 1 0 01-1-1v-9z" stroke="#3B7FFF" stroke-width="2" fill="#3B7FFF" fill-opacity=".15"/><path d="M9 20v-6h6v6" stroke="#3B7FFF" stroke-width="2"/></svg><span class="h-tab-lbl" style="color:#3B7FFF">首页</span></div>
     <div class="h-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><rect x="3" y="5" width="18" height="14" rx="2" stroke="#999" stroke-width="2"/><path d="M3 9h18" stroke="#999" stroke-width="2"/></svg><span class="h-tab-lbl" style="color:#999">非车</span></div>
+    <div class="h-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="9" r="3.5" stroke="#999" stroke-width="1.8"/><circle cx="15" cy="9" r="3.5" stroke="#999" stroke-width="1.8"/><path d="M4 20c0-3 2-5.5 5-5.5s5 2.5 5 5.5M10 20c0-3 2-5.5 5-5.5s5 2.5 5 5.5" stroke="#999" stroke-width="1.8" stroke-linecap="round"/></svg><span class="h-tab-lbl" style="color:#999">团队</span></div>
     <div class="h-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 4h5v16H4zM15 4h5v16h-5z" stroke="#999" stroke-width="2" stroke-linejoin="round"/><path d="M9 4h6v16H9" stroke="#999" stroke-width="2" stroke-linejoin="round" fill="none"/></svg><span class="h-tab-lbl" style="color:#999">学习</span></div>
     <div class="h-tab"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="8" r="4" stroke="#999" stroke-width="2"/><path d="M5 20c0-3.9 3.1-7 7-7s7 3.1 7 7" stroke="#999" stroke-width="2" stroke-linecap="round"/></svg><span class="h-tab-lbl" style="color:#999">我的</span></div>
   </div>
 </div>
 
-<!-- ============ AI MARKETING PAGE ============ -->
+<!-- ============ 万能营销首页 ============ -->
 <div class="page right" id="aiPage">
   <div style="flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch" class="ai-page">
     <div class="ai-status">
@@ -364,13 +791,15 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
     <div class="ai-card">
       <div class="ai-greet"><h2>Hi~魏总监</h2><p>下午好，电量重启时刻！现在是您的黄金工作时间，已为您筛选高意向客户</p></div>
       <div class="ai-tabs-wrap"><div class="ai-tabs" id="aiTabs"></div></div>
-      <div class="ai-div"></div>
-      <div class="ai-stats-txt">共为您挖掘<span class="hl" id="sCat">5</span>类<span class="hl" id="sTotal">24</span>位今日可重点跟进的客户</div>
-      <div class="ai-stats-row" id="sRow"></div>
-      <div class="cards-box" id="cBox"><div class="cards-track" id="cTrack"></div></div>
-      <div class="sw-dots" id="swDots"></div>
+      <!-- Stats section with border -->
+      <div class="ai-stats-section">
+        <div class="ai-stats-txt">共为您挖掘<span class="hl" id="sCat">5</span>类<span class="hl" id="sTotal">24</span>位今日可重点跟进的客户</div>
+        <div class="ai-stats-row" id="sRow"></div>
+        <div class="cards-box" id="cBox"><div class="cards-track" id="cTrack"></div></div>
+        <div class="sw-dots" id="swDots"></div>
+      </div>
     </div>
-    <div class="ai-cta"><button class="ai-cta-btn">开始今天的工作 <svg width="18" height="18" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="white" fill-opacity=".25"/><path d="M9 7l5 4-5 4" fill="white"/></svg></button></div>
+    <div class="ai-cta"><button class="ai-cta-btn" onclick="toggleChatBranch()">开始今天的工作 <svg width="18" height="18" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="white" fill-opacity=".25"/><path d="M9 7l5 4-5 4" fill="white"/></svg></button></div>
   </div>
   <div class="ai-bottom">
     <div class="ai-input-bar">
@@ -379,7 +808,267 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
       <div class="ai-bbtn"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><circle cx="6" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="6" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="6" cy="16" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="16" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="16" r="1.8" fill="#3B7FFF"/></svg></div>
     </div>
     <div class="ai-disc">ⓘ 内容由AI生成，仅供参考，以官方内容条款为准</div>
-    <div class="ai-home-ind"><div></div></div>
+  </div>
+</div>
+
+<!-- ============ 今日重点客户页 ============ -->
+<div class="page right" id="chatPage">
+  <div class="chat-scroll chat-page">
+    <!-- Status -->
+    <div class="chat-status">
+      <span>9:41</span>
+      <div style="display:flex;align-items:center;gap:5px">
+        <svg width="14" height="10" viewBox="0 0 17 12" fill="none"><rect y="6" width="3" height="6" rx="1" fill="#1A1A2E"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1A1A2E"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#1A1A2E"/><rect x="13.5" width="3" height="12" rx="1" fill="#1A1A2E"/></svg>
+        <svg width="14" height="10" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3.5 1 5.5L2.5 7c1.2-1.5 3.2-2.5 5.5-2.5S12.3 5.5 13.5 7L15 5.5C13.5 3.5 11 2 8 2z" fill="#1A1A2E"/><circle cx="8" cy="10.5" r="1.5" fill="#1A1A2E"/></svg>
+        <svg width="22" height="10" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="2.5" stroke="#1A1A2E" stroke-opacity=".35"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="#1A1A2E"/></svg>
+      </div>
+    </div>
+    <!-- Nav -->
+    <div class="chat-nav">
+      <div class="chat-nav-left" onclick="navigateTo('aiPage')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>万能营销</span>
+      </div>
+      <div class="chat-nav-center">
+        <div class="chat-nav-center-avatar">👩‍💼<div class="chat-nav-center-badge">10</div></div>
+        <span>今日重点客户</span>
+      </div>
+      <div class="chat-nav-menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#1A1A2E" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+    </div>
+    <!-- Messages -->
+    <!-- Messages — dynamically filled by loadChatPage() -->
+    <div class="chat-messages" id="chatMessages">
+    </div>
+  </div>
+  <!-- Bottom: same voice input bar -->
+  <div class="chat-bottom">
+    <div class="ai-input-bar">
+      <div class="ai-bbtn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><defs><linearGradient id="sg2" x1="5" y1="2" x2="19" y2="17"><stop stop-color="#3B7FFF"/><stop offset="1" stop-color="#8B5CF6"/></linearGradient></defs><path d="M12 2l2 5h5l-4 3.5 1.5 5L12 13l-4.5 2.5L9 10.5 5 7h5z" fill="url(#sg2)"/></svg></div>
+      <div class="ai-mic"><div class="ai-mic-in"></div><svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="position:relative;z-index:1"><rect x="9" y="3" width="6" height="11" rx="3" fill="white"/><path d="M6 12a6 6 0 0012 0" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M12 19v2.5" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+      <div class="ai-bbtn"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><circle cx="6" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="6" r="1.8" fill="#3B7FFF"/><circle cx="6" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="11" r="1.8" fill="#3B7FFF"/><circle cx="6" cy="16" r="1.8" fill="#3B7FFF"/><circle cx="11" cy="16" r="1.8" fill="#3B7FFF"/><circle cx="16" cy="16" r="1.8" fill="#3B7FFF"/></svg></div>
+    </div>
+    <div class="ai-disc">ⓘ 内容由AI生成，仅供参考，以官方内容条款为准</div>
+  </div>
+</div>
+
+<!-- ============ 车险报价页 ============ -->
+<div class="page right" id="quotePage">
+  <div class="quote-scroll quote-page">
+    <!-- Status -->
+    <div class="chat-status">
+      <span>9:41</span>
+      <div style="display:flex;align-items:center;gap:5px">
+        <svg width="14" height="10" viewBox="0 0 17 12" fill="none"><rect y="6" width="3" height="6" rx="1" fill="#1A1A2E"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1A1A2E"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#1A1A2E"/><rect x="13.5" width="3" height="12" rx="1" fill="#1A1A2E"/></svg>
+        <svg width="14" height="10" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3.5 1 5.5L2.5 7c1.2-1.5 3.2-2.5 5.5-2.5S12.3 5.5 13.5 7L15 5.5C13.5 3.5 11 2 8 2z" fill="#1A1A2E"/><circle cx="8" cy="10.5" r="1.5" fill="#1A1A2E"/></svg>
+        <svg width="22" height="10" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="2.5" stroke="#1A1A2E" stroke-opacity=".35"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="#1A1A2E"/></svg>
+      </div>
+    </div>
+    <!-- Nav -->
+    <div class="quote-nav">
+      <div class="quote-nav-left" onclick="navigateTo('chatPage')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>万能营销</span>
+      </div>
+      <div class="chat-nav-menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#1A1A2E" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+    </div>
+
+    <!-- User bubble -->
+    <div class="quote-user-bubble">
+      <div class="chat-b">去给杨登江分享车险报价方案</div>
+    </div>
+
+    <!-- Outer card wrapping intro + inner blue card -->
+    <div class="quote-outer">
+      <div class="quote-outer-intro">按去年方案及优选方案共生成两套报价方案，请参考</div>
+      <div class="quote-card">
+        <div class="quote-card-header">
+          <div class="quote-card-header-title">推荐理由</div>
+          <div class="quote-card-header-sub">保障更全面，性价比更高</div>
+          <div class="quote-card-coin">¥</div>
+        </div>
+        <div class="quote-compare">
+          <div class="quote-cols">
+            <!-- Left: 去年方案 -->
+            <div class="quote-col">
+              <div class="quote-col-title">去年方案</div>
+              <div class="quote-col-price">¥965</div>
+              <div class="quote-row"><div class="quote-row-name">交强险</div><div class="quote-row-val">投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">车损险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">三者险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">司机险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">乘客险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">三者医保外用药</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">司机医保外用药</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">乘客医保外用药</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">平安车主尊享保障</div><div class="quote-row-val">不投保</div></div>
+              <button class="quote-fwd-btn outline">转发去年方案</button>
+            </div>
+            <!-- Right: 优选方案 -->
+            <div class="quote-col recommended">
+              <div class="quote-col-title">优选方案</div>
+              <div class="quote-col-price">¥965</div>
+              <div class="quote-row"><div class="quote-row-name">交强险</div><div class="quote-row-val">投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">车损险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">三者险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">司机险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">乘客险</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">三者医保外用药</div><div class="quote-row-val">共享保额</div></div>
+              <div class="quote-row"><div class="quote-row-name">司机医保外用药</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">乘客医保外用药</div><div class="quote-row-val">不投保</div></div>
+              <div class="quote-row"><div class="quote-row-name">平安车主尊享保障</div><div class="quote-row-val">不投保</div></div>
+              <button class="quote-fwd-btn fill">转发推荐方案</button>
+            </div>
+          </div>
+        </div>
+        <!-- "修改报价" inside the card -->
+        <div class="quote-modify-inner">修改报价 ›</div>
+        <!-- PK badge — fixed on card, positioned by JS at 乘客险 level -->
+        <div class="quote-pk-fixed" id="quotePK"><div class="quote-pk-badge">PK</div></div>
+      </div>
+      <!-- Arrow removed from here, moved to page level -->
+    </div>
+  </div>
+
+  <!-- Arrow — fixed on page, doesn't scroll -->
+  <div class="quote-arrow-page" id="quoteArrow" onclick="document.querySelector('#quotePage .quote-scroll').scrollBy({top:200,behavior:'smooth'})">
+    <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 5v10M6 11l4 4 4-4" stroke="#1A1A2E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+
+  <!-- Bottom -->
+  <div style="flex-shrink:0;background:#F5F6FA;padding-bottom:8px">
+    <div class="quote-tags">
+      <div class="quote-tag"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M9 2l1.5 4h4l-3 2.5 1 4L9 10l-3.5 2.5 1-4-3-2.5h4z" stroke="#5A6580" stroke-width="1.3" fill="none"/></svg>指令中心</div>
+      <div class="quote-tag"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="6" stroke="#5A6580" stroke-width="1.3"/><text x="9" y="12" text-anchor="middle" fill="#5A6580" font-size="8" font-weight="700">?</text></svg>产品咨询</div>
+      <div class="quote-tag"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="6" r="3" stroke="#5A6580" stroke-width="1.3"/><path d="M4 15c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="#5A6580" stroke-width="1.3"/></svg>发朋友圈</div>
+      <div class="quote-tag"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><rect x="3" y="4" width="12" height="10" rx="2" stroke="#5A6580" stroke-width="1.3"/><path d="M6 8h6M6 11h4" stroke="#5A6580" stroke-width="1" stroke-linecap="round"/></svg>车主…</div>
+    </div>
+    <div class="quote-input-row">
+      <svg width="18" height="18" viewBox="0 0 22 22" fill="none"><rect x="8" y="3" width="6" height="10" rx="3" stroke="#B0B8C8" stroke-width="1.5"/><path d="M5 11a6 6 0 0012 0" stroke="#B0B8C8" stroke-width="1.5" stroke-linecap="round"/><path d="M11 17v3" stroke="#B0B8C8" stroke-width="1.5" stroke-linecap="round"/></svg>
+      <span>请输入你的问题</span>
+    </div>
+    <div class="quote-disc">ⓘ 内容由AI学习保险知识后生成，未经过专业人员审核，仅用于内部参考</div>
+  </div>
+</div>
+
+<!-- ============ 成交秘籍页 ============ -->
+<div class="page right" id="secretPage">
+  <div class="secret-scroll secret-page">
+    <!-- Status -->
+    <div class="chat-status">
+      <span>9:41</span>
+      <div style="display:flex;align-items:center;gap:5px">
+        <svg width="14" height="10" viewBox="0 0 17 12" fill="none"><rect y="6" width="3" height="6" rx="1" fill="#1A1A2E"/><rect x="4.5" y="4" width="3" height="8" rx="1" fill="#1A1A2E"/><rect x="9" y="1.5" width="3" height="10.5" rx="1" fill="#1A1A2E"/><rect x="13.5" width="3" height="12" rx="1" fill="#1A1A2E"/></svg>
+        <svg width="14" height="10" viewBox="0 0 16 12" fill="none"><path d="M8 2C5 2 2.5 3.5 1 5.5L2.5 7c1.2-1.5 3.2-2.5 5.5-2.5S12.3 5.5 13.5 7L15 5.5C13.5 3.5 11 2 8 2z" fill="#1A1A2E"/><circle cx="8" cy="10.5" r="1.5" fill="#1A1A2E"/></svg>
+        <svg width="22" height="10" viewBox="0 0 27 13" fill="none"><rect x=".5" y=".5" width="23" height="12" rx="2.5" stroke="#1A1A2E" stroke-opacity=".35"/><rect x="2" y="2" width="19" height="9" rx="1.5" fill="#1A1A2E"/></svg>
+      </div>
+    </div>
+    <!-- Nav -->
+    <div class="chat-nav">
+      <div class="chat-nav-left" onclick="navigateTo('chatPage')">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        <span>万能营销</span>
+      </div>
+      <div class="chat-nav-center">
+        <div class="chat-nav-center-avatar">👩‍💼<div class="chat-nav-center-badge">10</div></div>
+        <span>今日重点客户</span>
+      </div>
+      <div style="display:flex;align-items:center;gap:6px">
+        <div style="width:28px;height:28px;border-radius:14px;background:linear-gradient(135deg,#3B7FFF,#56B4FF);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M4 16c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        <div class="chat-nav-menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#1A1A2E" stroke-width="2.2" stroke-linecap="round"/></svg></div>
+      </div>
+    </div>
+    <!-- Messages -->
+    <div class="secret-msgs">
+      <!-- User bubble -->
+      <div class="chat-bubble-right"><div class="chat-b">我想看看吴佩芝的成交秘籍</div></div>
+
+      <!-- Outer card: AI text + bordered inner (tabs+policy) + icons -->
+      <div class="secret-card">
+        <div style="font-size:12px;color:#1A1A2E;line-height:1.7;margin-bottom:10px">吴佩芝，45岁，血糖偏高，价格敏感型客户。近期浏览了百万医产品资讯3次。建议优先保障健康方面的缺口。</div>
+        <!-- Inner bordered section: 建议关注 tag + tabs + policy -->
+        <div class="secret-inner">
+          <div class="secret-inner-tag"><span>建议关注</span></div>
+          <div class="secret-tabs">
+            <div class="secret-tab act">医疗</div>
+            <div class="secret-tab">意外</div>
+            <div class="secret-tab">重疾</div>
+            <div class="secret-tab">家财宠</div>
+            <div class="secret-tab">储蓄养老</div>
+            <div class="secret-tab">定期寿险</div>
+          </div>
+          <div class="secret-policy">
+            <div class="secret-policy-hd">
+              <div class="secret-policy-icon"><svg width="10" height="10" viewBox="0 0 14 14" fill="none"><rect x="2" y="1" width="10" height="12" rx="1.5" stroke="white" stroke-width="1.2"/><path d="M5 5h4M5 7.5h4" stroke="white" stroke-width="1" stroke-linecap="round"/></svg></div>
+              <span class="secret-policy-title">当前已有保障</span>
+            </div>
+            <div class="secret-policy-row"><span>当前保障</span><span>平安悦享逸家</span></div>
+            <div class="secret-policy-row"><span>被保人</span><strong>吴佩芝</strong></div>
+            <div class="secret-policy-row"><span>保障期限</span><span style="font-size:8px">2009年4月6日～2104年4月5日</span></div>
+          </div>
+        </div>
+        <!-- 点赞、踩、刷新 -->
+        <div class="secret-actions">
+          <div class="secret-act-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M7 10V18H4V10H7Z" stroke="#8A95A8" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10L10 4C10.5 3 11.5 3 12 3.5C12.5 4 12.5 5 12.5 5.5V8H17.5C18.3 8 19 8.8 18.8 9.6L17.3 17.6C17.1 18.4 16.4 19 15.6 19H7" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="secret-act-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M15 12V4H18V12H15Z" stroke="#8A95A8" stroke-width="1.5" stroke-linejoin="round"/><path d="M15 12L12 18C11.5 19 10.5 19 10 18.5C9.5 18 9.5 17 9.5 16.5V14H4.5C3.7 14 3 13.2 3.2 12.4L4.7 4.4C4.9 3.6 5.6 3 6.4 3H15" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="secret-act-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M17.5 7.5A7.5 7.5 0 003.5 11" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 14.5A7.5 7.5 0 0018.5 11" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M15 5l3 2.5L20.5 5" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17l-3-2.5L1.5 17" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Bordered card: recommend + analysis + posters + icons -->
+      <div class="secret-card">
+        <div class="secret-recommend" style="margin-bottom:8px">
+          <span class="secret-recommend-text">建议吴佩芝优先配置平安百万医疗险</span>
+          <span class="secret-recommend-link">🔄 切换产品</span>
+        </div>
+        <div class="secret-analysis" style="margin-bottom:10px">吴佩芝身处中年，且有基础疾病。癌症发病率达45%，建议优先保障百万医产品。且产品正处于活动加佣期间，给客户发送产品海报，了解下客户的购买意愿吧~</div>
+        <div class="secret-posters">
+          <div class="secret-poster">
+            <div class="secret-poster-img" style="background:none"><img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0"/></div>
+            <div class="secret-poster-foot">1048人已分享</div>
+          </div>
+          <div class="secret-poster">
+            <div class="secret-poster-img" style="background:none"><img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0"/></div>
+            <div class="secret-poster-foot">1048人已分享</div>
+          </div>
+          <div class="secret-poster">
+            <div class="secret-poster-img" style="background:none"><img src="data:image/jpeg;base64,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" style="width:100%;height:100%;object-fit:cover;border-radius:8px 8px 0 0"/></div>
+            <div class="secret-poster-foot">1048人已分享</div>
+          </div>
+        </div>
+        <div class="secret-actions">
+          <div class="secret-act-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M7 10V18H4V10H7Z" stroke="#8A95A8" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10L10 4C10.5 3 11.5 3 12 3.5C12.5 4 12.5 5 12.5 5.5V8H17.5C18.3 8 19 8.8 18.8 9.6L17.3 17.6C17.1 18.4 16.4 19 15.6 19H7" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="secret-act-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M15 12V4H18V12H15Z" stroke="#8A95A8" stroke-width="1.5" stroke-linejoin="round"/><path d="M15 12L12 18C11.5 19 10.5 19 10 18.5C9.5 18 9.5 17 9.5 16.5V14H4.5C3.7 14 3 13.2 3.2 12.4L4.7 4.4C4.9 3.6 5.6 3 6.4 3H15" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="secret-act-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M17.5 7.5A7.5 7.5 0 003.5 11" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M4.5 14.5A7.5 7.5 0 0018.5 11" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M15 5l3 2.5L20.5 5" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M7 17l-3-2.5L1.5 17" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+        </div>
+      </div>
+
+      <!-- Final prompt -->
+      <div class="chat-prompt-section">
+        <div class="chat-prompt-text">吴佩芝对于百万医产品兴趣如何？要不要先帮他看看投保条件进行预核保？</div>
+        <div class="chat-quick">
+          <span class="chat-quick-label">快捷回复</span>
+          <button class="chat-quick-btn">好的</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom: single input box with nav inside -->
+  <div class="secret-bottom">
+    <div class="secret-input-outer">
+      <div class="secret-input-top">
+        <svg width="18" height="18" viewBox="0 0 22 22" fill="none"><rect x="8" y="3" width="6" height="10" rx="3" stroke="#3B7FFF" stroke-width="1.5"/><path d="M5 11a6 6 0 0012 0" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/><path d="M11 17v3" stroke="#3B7FFF" stroke-width="1.5" stroke-linecap="round"/></svg>
+        <span>对话内容已开启隐私保护</span>
+        <div class="secret-send"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M3 9h12M11 5l4 4-4 4" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      </div>
+      <div class="secret-nav-inline">
+        <span class="secret-nav-label">吴佩芝销售导航中</span>
+        <div class="secret-nav-btns">
+          <div class="secret-nav-btn"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M14.5 6A6 6 0 003 9" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 12A6 6 0 0015 9" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M12.5 4l2 2 2-2" stroke="#8A95A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 14l-2-2-2 2" stroke="#8A95A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="secret-nav-btn"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M7 3H4a1 1 0 00-1 1v10a1 1 0 001 1h3" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13l4-4-4-4" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 9H7" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/></svg></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -391,21 +1080,48 @@ body{font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans G
 <script>
 // ===== NAVIGATION =====
 function navigateTo(id){
-  if(id==='aiPage'){document.getElementById('homePage').className='page left';document.getElementById('aiPage').className='page active'}
-  else{document.getElementById('aiPage').className='page right';document.getElementById('homePage').className='page active'}
+  const pages=['homePage','aiPage','chatPage','quotePage','secretPage'];
+  pages.forEach(p=>{
+    const el=document.getElementById(p);
+    if(p===id) el.className='page active';
+    else{
+      // Determine direction: pages to the left get 'left', pages to the right get 'right'
+      const targetIdx=pages.indexOf(id);
+      const thisIdx=pages.indexOf(p);
+      el.className=thisIdx<targetIdx?'page left':'page right';
+    }
+  });
 }
+
+// ===== SCROLL HEADER TOGGLE =====
+(function(){
+  const scroll=document.querySelector('#homePage .h-scroll');
+  const fixedTop=document.getElementById('hFixedTop');
+  const threshold=30;
+  let isScrolled=false;
+  scroll.addEventListener('scroll',function(){
+    const y=scroll.scrollTop;
+    if(y>threshold&&!isScrolled){
+      isScrolled=true;
+      fixedTop.classList.add('scrolled');
+    }else if(y<=threshold&&isScrolled){
+      isScrolled=false;
+      fixedTop.classList.remove('scrolled');
+    }
+  },{passive:true});
+})();
 
 // ===== HOME: Agent Tab =====
 const agentData=[
-  {icon:'📊',title:'团队小微脱保续回',tag:'3月22日到期',h3:'成员王武春的续保单已经脱保啦',p:'立即前往完成任务',btn:'提醒成员'},
-  {icon:'🏠',title:'非车续保提醒',tag:'本周到期3单',h3:'客户李明的家财险即将到期',p:'及时跟进避免脱保',btn:'立即跟进'},
-  {icon:'👥',title:'高意向潜客推荐',tag:'新增5位',h3:'系统为您推荐了5位高意向潜客',p:'点击查看详细信息',btn:'查看详情'},
-  {icon:'🔍',title:'潜客深度挖掘',tag:'智能分析',h3:'发现3位客户有加保需求',p:'基于AI智能分析结果',btn:'开始挖掘'},
+  {plate:'陕A-2T86Q',handler:'投:常玲',price:'上年¥522.5',action:'联系/反馈'},
+  {plate:'京B-5K92M',handler:'投:王明',price:'上年¥680.0',action:'联系/反馈'},
+  {plate:'粤C-8R23N',handler:'投:李华',price:'上年¥455.8',action:'联系/反馈'},
+  {plate:'沪D-3T56P',handler:'投:赵强',price:'上年¥920.0',action:'联系/反馈'},
 ];
 function switchAgentTab(i){
   document.querySelectorAll('#agentTabs .h-agent-tab').forEach((t,j)=>t.classList.toggle('active',j===i));
-  const c=agentData[i];
-  document.getElementById('agentBody').innerHTML=`<div class="h-agent-card"><div class="h-agent-card-hd"><div class="h-agent-card-icon">${c.icon}</div><span class="h-agent-card-title">${c.title}</span><span class="h-agent-card-tag">${c.tag}</span></div><div class="h-agent-card-bd"><div><h3>${c.h3}</h3><p>${c.p}</p></div><button class="h-remind-btn">${c.btn}</button></div></div><div class="h-agent-dots"><div class="h-agent-dot"></div><div class="h-agent-dot active"></div></div>`;
+  const c=agentData[i]||agentData[0];
+  document.getElementById('agentBody').innerHTML=`<div class="h-agent-card" style="background:#F8FAFE;position:relative"><div style="position:absolute;top:10px;right:10px;width:20px;height:20px;border-radius:10px;background:#F0F2F5;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;color:#999">✕</div><div style="margin-bottom:8px"><span style="font-size:16px;font-weight:800;color:#1A1A2E;letter-spacing:.5px">${c.plate}</span><span style="font-size:9px;color:#3B7FFF;background:#EBF3FF;padding:2px 6px;border-radius:3px;margin-left:8px;font-weight:600">${c.handler}</span></div><div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px"><span style="font-size:12px;color:#8A95A8">${c.price}</span><button class="h-remind-btn" style="padding:6px 16px">${c.action}</button></div><div style="font-size:11px;color:#8A95A8">立即前往完成任务</div></div><div class="h-agent-dots"><div class="h-agent-dot active" style="width:18px"></div><div class="h-agent-dot"></div></div>`;
 }
 
 // ===== AI PAGE DATA =====
@@ -470,7 +1186,7 @@ function buildCards(){
     const sl=document.createElement('div');sl.className='card-slide';
     sl.innerHTML=`
       ${cards.length>1?`<div class="cc sl"><div class="cc-tag">${prev.tag}</div><div class="cc-body">${prev.title}</div><div class="cc-q">\u201D\u201D</div><div class="cc-user"><div class="cc-av"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="cc-nm">${prev.name}</span></div></div>`:''}
-      <div class="cc ctr"><div class="cc-tag">${card.tag}</div><div class="cc-body">${card.title}</div><div class="cc-q">\u201D\u201D</div><div class="cc-user"><div class="cc-av"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="cc-nm">${card.name}</span></div></div>
+      <div class="cc ctr" ${curStat===0?`onclick="loadChatPage('car');navigateTo('chatPage')" style="cursor:pointer"`:curStat===1?`onclick="navigateTo('secretPage')" style="cursor:pointer"`:curStat===2?`onclick="loadChatPage('noncar');navigateTo('chatPage')" style="cursor:pointer"`:''}><div class="cc-tag">${card.tag}</div><div class="cc-body">${card.title}</div><div class="cc-q">\u201D\u201D</div><div class="cc-user"><div class="cc-av"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="cc-nm">${card.name}</span></div></div>
       ${cards.length>1?`<div class="cc sr"><div class="cc-tag">${next.tag}</div><div class="cc-body">${next.title}</div><div class="cc-q">\u201D\u201D</div><div class="cc-user"><div class="cc-av"><svg width="12" height="12" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="5" r="2.5" fill="white" fill-opacity=".75"/><path d="M3.5 13c0-2 1.6-3.5 3.5-3.5s3.5 1.5 3.5 3.5" fill="white" fill-opacity=".75"/></svg></div><span class="cc-nm">${next.name}</span></div></div>`:''}`;
     track.appendChild(sl);
   });
@@ -486,6 +1202,129 @@ function buildCards(){
   box.onmouseleave=()=>{md=false};
 }
 buildTabs();buildStats();
+
+// ===== QUOTE PAGE: PK position + Arrow hide/show =====
+(function(){
+  const scrollEl=document.querySelector('#quotePage .quote-scroll');
+  const arrow=document.getElementById('quoteArrow');
+  const pk=document.getElementById('quotePK');
+  if(!scrollEl||!arrow)return;
+
+  function positionPK(){
+    const leftCol=document.querySelector('#quotePage .quote-col');
+    if(!leftCol||!pk)return;
+    const rows=leftCol.querySelectorAll('.quote-row');
+    const card=document.querySelector('#quotePage .quote-card');
+    if(!card)return;
+    const cardRect=card.getBoundingClientRect();
+    // PK at 乘客险 (row index 4)
+    if(rows.length>=5){
+      const r=rows[4];
+      const rr=r.getBoundingClientRect();
+      pk.style.top=(rr.top-cardRect.top+rr.height/2-15)+'px';
+    }
+  }
+  setTimeout(positionPK,150);
+  const observer=new MutationObserver(()=>setTimeout(positionPK,150));
+  observer.observe(document.getElementById('quotePage'),{attributes:true});
+
+  // Arrow: hide when scrolled to bottom, show otherwise
+  scrollEl.addEventListener('scroll',function(){
+    const maxScroll=scrollEl.scrollHeight-scrollEl.clientHeight;
+    if(scrollEl.scrollTop>maxScroll-30){
+      arrow.classList.add('hidden');
+    }else{
+      arrow.classList.remove('hidden');
+    }
+  },{passive:true});
+})();
+
+// ===== 今日重点客户页: Dynamic content loading =====
+const phoneSvg='<svg width="10" height="10" viewBox="0 0 14 14" fill="none"><path d="M3 2a1 1 0 011-1h1.5a1 1 0 011 .8l.3 1.5a1 1 0 01-.5 1L5.5 5a7 7 0 003.5 3.5l.7-.8a1 1 0 011-.5l1.5.3a1 1 0 01.8 1V11a1 1 0 01-1 1A10 10 0 013 2z" fill="#4CAF50"/></svg>';
+
+const chatBranches={
+  car:{
+    userMsg:'跟进今日重点客户',
+    intro:'为您筛选了<strong>5</strong>个<strong>车险续保</strong>类的客户，您可以在页面右上角查看今日重点客户，也可以跟着小保的推荐节奏来跟进。',
+    customer:{name:'杨登江',avatar:'👨‍💼',age:'45岁',renew:'多年续',lastYear:'¥2300',action:'建议优先报价',commission:'30%'},
+    analysis:'小保帮您分析了您的今日重点客户池，其中客户杨登江车险即将到期，建议您优先跟进。',
+    prompt:'立刻开启杨登江的续保报价',
+    quickAction:function(){navigateTo('quotePage')}
+  },
+  noncar:{
+    userMsg:'跟进今日重点客户',
+    intro:'为您筛选了<strong>2</strong>个<strong>非车潜客</strong>类的客户，您可以在页面右上角查看今日重点客户，也可以跟着小保的推荐节奏来跟进。',
+    customer:{name:'吴佩芝',avatar:'👩‍💼',age:'45岁',renew:'多年续',lastYear:'¥2300',action:'建议优先配置平安百万医',commission:'30%'},
+    analysis:'小保帮您分析了您的今日重点客户池，其中客户吴佩芝近30天浏览了意外险产品，且近3天频繁访问您的主页，成交信号极强。建议您优先跟进。',
+    prompt:'立刻解锁吴佩芝的成交秘籍～',
+    quickAction:function(){navigateTo('secretPage')}
+  }
+};
+
+let currentChatBranch='car';
+
+function loadChatPage(type){
+  currentChatBranch=type;
+  const b=chatBranches[type];
+  if(!b)return;
+  const c=b.customer;
+  const el=document.getElementById('chatMessages');
+  el.innerHTML=`
+    <div class="chat-bubble-right"><div class="chat-b">${b.userMsg}</div></div>
+    <div class="chat-bubble-full"><div class="chat-b">${b.intro}</div></div>
+    <div class="chat-section">
+      <div class="chat-customer">
+        <div class="chat-cust-top">
+          <div class="chat-cust-avatar">${c.avatar}</div>
+          <div class="chat-cust-info">
+            <div class="chat-cust-name">${c.name}<div class="chat-phone">${phoneSvg}</div></div>
+            <div class="chat-cust-meta">${c.age} | ${c.renew} | 上年 ${c.lastYear}</div>
+          </div>
+        </div>
+        <div class="chat-cust-bottom">
+          <div class="chat-cust-action">${c.action}</div>
+          <div class="chat-cust-commission">${c.commission}<span>预估佣金</span></div>
+        </div>
+      </div>
+      <div class="chat-section-text">${b.analysis}</div>
+    </div>
+    <div class="chat-prompt-section">
+      <div class="chat-prompt-text">${b.prompt}</div>
+      <div class="chat-quick">
+        <span class="chat-quick-label">快捷回复</span>
+        <button class="chat-quick-btn" id="chatQuickBtn">好的</button>
+      </div>
+    </div>`;
+  // Bind quick button
+  document.getElementById('chatQuickBtn').onclick=function(){
+    if(type==='car'){
+      goToQuote(c.name);
+    }else{
+      b.quickAction();
+    }
+  };
+}
+
+// Load default on first visit
+loadChatPage('car');
+
+// Toggle: first click = car, second = noncar, repeating
+let chatClickCount=0;
+function toggleChatBranch(){
+  const branches=['car','noncar'];
+  loadChatPage(branches[chatClickCount % branches.length]);
+  chatClickCount++;
+  navigateTo('chatPage');
+}
+
+// ===== 车险报价页: Card click navigates with customer name =====
+function goToQuote(name){
+  const bubble=document.querySelector('#quotePage .quote-user-bubble .chat-b');
+  if(bubble) bubble.textContent='去给'+name+'分享车险报价方案';
+  const intro=document.querySelector('#quotePage .quote-outer-intro');
+  if(intro) intro.textContent='按去年方案及优选方案为'+name+'共生成两套报价方案，请参考';
+  navigateTo('quotePage');
+}
 </script>
 </body>
 </html>
