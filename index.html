@@ -12,63 +12,56 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ========== IPHONE 16 PRO FRAME ========== */
 .phone{position:relative;width:380px;height:800px;flex-shrink:0;filter:drop-shadow(0 40px 80px rgba(0,0,0,.32)) drop-shadow(0 12px 24px rgba(0,0,0,.18))}
 
-/* Outer titanium chassis — Silver / White Titanium */
+/* Outer titanium chassis — Black Titanium */
 .phone-body{
   position:absolute;inset:0;
   background:linear-gradient(160deg,
-    #d4d4d8 0%,
-    #e8e8ec 6%,
-    #c8c8ce 14%,
-    #dcdce0 28%,
-    #b8b8bf 42%,
-    #d0d0d6 55%,
-    #c2c2c9 68%,
-    #dadadf 82%,
-    #ccccd2 94%,
-    #d6d6db 100%
+    #2a2a2e 0%,
+    #3a3a3f 6%,
+    #232327 14%,
+    #2e2e33 28%,
+    #1e1e22 42%,
+    #2b2b30 55%,
+    #222226 68%,
+    #333338 82%,
+    #2a2a2e 94%,
+    #2e2e32 100%
   );
   border-radius:56px;
   box-shadow:
-    /* inner bezel */
-    inset 0 0 0 .5px rgba(255,255,255,.5),
-    /* titanium band - inner seam */
-    0 0 0 1px #a0a0a6,
-    /* titanium band - main visible silver edge */
-    0 0 0 2.5px #c6c6cc,
-    /* titanium band - outer seam */
-    0 0 0 3.5px #969699,
-    /* subtle outer contour */
-    0 0 0 4.5px rgba(100,100,110,.25);
+    inset 0 0 0 .5px rgba(255,255,255,.06),
+    0 0 0 1px #18181b,
+    0 0 0 2.5px #48484d,
+    0 0 0 3.5px #28282c,
+    0 0 0 4.5px rgba(0,0,0,.5);
 }
 
-/* Titanium specular highlights — bright silver reflection */
+/* Titanium specular highlights */
 .phone-body::before{
   content:'';position:absolute;inset:0;border-radius:56px;
   background:
     linear-gradient(158deg,
-      rgba(255,255,255,.55) 0%,
-      rgba(255,255,255,.30) 8%,
-      rgba(255,255,255,.10) 18%,
-      transparent 30%,
-      transparent 55%,
-      rgba(255,255,255,.06) 75%,
-      rgba(255,255,255,.18) 92%,
-      rgba(255,255,255,.25) 100%
+      rgba(255,255,255,.14) 0%,
+      rgba(255,255,255,.06) 10%,
+      transparent 22%,
+      transparent 60%,
+      rgba(255,255,255,.03) 80%,
+      rgba(255,255,255,.08) 100%
     );
   pointer-events:none;z-index:1;
 }
 /* Inner depth shadow */
 .phone-body::after{
   content:'';position:absolute;inset:3px;border-radius:54px;
-  box-shadow:inset 0 1px 4px rgba(0,0,0,.12), inset 0 -1px 2px rgba(255,255,255,.4);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.4), inset 0 -1px 2px rgba(255,255,255,.04);
   pointer-events:none;z-index:1;
 }
 
 /* ---- Dynamic Island ---- */
 .dynamic-island{
-  position:absolute;top:13px;left:50%;transform:translateX(-50%);
-  width:124px;height:37px;
-  background:#000;border-radius:22px;z-index:300;
+  position:absolute;top:14px;left:50%;transform:translateX(-50%);
+  width:120px;height:28px;
+  background:#000;border-radius:16px;z-index:300;
   box-shadow:
     inset 0 1px 3px rgba(0,0,0,.9),
     inset 0 -0.5px 1px rgba(255,255,255,.04),
@@ -76,8 +69,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 }
 /* Front camera lens */
 .dynamic-island::after{
-  content:'';position:absolute;top:50%;right:24px;transform:translateY(-50%);
-  width:10px;height:10px;border-radius:50%;
+  content:'';position:absolute;top:50%;right:20px;transform:translateY(-50%);
+  width:8px;height:8px;border-radius:50%;
   background:radial-gradient(circle at 38% 38%,
     #2a4a7a 0%,
     #142844 40%,
@@ -97,30 +90,30 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   box-shadow:inset 0 0 1px rgba(255,255,255,.06);
 }
 
-/* ---- Side Buttons (Silver Titanium) ---- */
+/* ---- Side Buttons (Black Titanium) ---- */
 .btn-silent{
   position:absolute;left:-3px;top:120px;width:3.5px;height:28px;
-  background:linear-gradient(90deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  background:linear-gradient(90deg,#3a3a3f 0%,#58585e 30%,#4e4e54 60%,#3a3a3f 100%);
   border-radius:2px 0 0 2px;
-  box-shadow:-1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+  box-shadow:-1px 0 2px rgba(0,0,0,.3), inset 0 .5px 0 rgba(255,255,255,.1), inset 0 -.5px 0 rgba(0,0,0,.2);
 }
 .btn-vol-up{
   position:absolute;left:-3px;top:168px;width:3.5px;height:50px;
-  background:linear-gradient(90deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  background:linear-gradient(90deg,#3a3a3f 0%,#58585e 30%,#4e4e54 60%,#3a3a3f 100%);
   border-radius:2px 0 0 2px;
-  box-shadow:-1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+  box-shadow:-1px 0 2px rgba(0,0,0,.3), inset 0 .5px 0 rgba(255,255,255,.1), inset 0 -.5px 0 rgba(0,0,0,.2);
 }
 .btn-vol-dn{
   position:absolute;left:-3px;top:228px;width:3.5px;height:50px;
-  background:linear-gradient(90deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  background:linear-gradient(90deg,#3a3a3f 0%,#58585e 30%,#4e4e54 60%,#3a3a3f 100%);
   border-radius:2px 0 0 2px;
-  box-shadow:-1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+  box-shadow:-1px 0 2px rgba(0,0,0,.3), inset 0 .5px 0 rgba(255,255,255,.1), inset 0 -.5px 0 rgba(0,0,0,.2);
 }
 .btn-power{
   position:absolute;right:-3px;top:180px;width:3.5px;height:76px;
-  background:linear-gradient(270deg,#a8a8ae 0%,#d2d2d8 30%,#c0c0c6 60%,#a8a8ae 100%);
+  background:linear-gradient(270deg,#3a3a3f 0%,#58585e 30%,#4e4e54 60%,#3a3a3f 100%);
   border-radius:0 2px 2px 0;
-  box-shadow:1px 0 2px rgba(0,0,0,.15), inset 0 .5px 0 rgba(255,255,255,.6), inset 0 -.5px 0 rgba(0,0,0,.1);
+  box-shadow:1px 0 2px rgba(0,0,0,.3), inset 0 .5px 0 rgba(255,255,255,.1), inset 0 -.5px 0 rgba(0,0,0,.2);
 }
 
 /* ---- Screen ---- */
@@ -176,7 +169,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* Status bar — uses ::after overlay for smooth bg transition */
 .h-status{
   display:flex;justify-content:space-between;align-items:center;
-  padding:42px 16px 6px;
+  padding:34px 16px 6px;
   background:linear-gradient(135deg,#4A90E2,#357ABD,#2E6BA8);
   color:#fff;font-size:12px;font-weight:600;
   position:relative;overflow:hidden;
@@ -304,7 +297,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 
 /* ========== AI MARKETING PAGE ========== */
 .ai-page{background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 10%,#E5DDF5 25%,#EDE5F5 40%,#F3EFF8 55%,#F5F6FA 75%)}
-.ai-status{display:flex;justify-content:space-between;align-items:center;padding:42px 20px 4px;color:#1A1A2E;font-size:14px;font-weight:600}
+.ai-status{display:flex;justify-content:space-between;align-items:center;padding:34px 20px 4px;color:#1A1A2E;font-size:14px;font-weight:600}
 .ai-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 8px}
 .ai-back{display:flex;align-items:center;gap:5px;cursor:pointer}
 .ai-back span{font-size:16px;font-weight:700;color:#1A1A2E}
@@ -378,11 +371,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 /* ========== AI CHAT PAGE ========== */
 .chat-page{background:linear-gradient(180deg,#DDE4F8 0%,#D5DBFA 8%,#E5DDF5 18%,#EDE5F5 30%,#F5F6FA 50%)}
 .chat-scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column}
-.chat-status{display:flex;justify-content:space-between;align-items:center;padding:42px 20px 4px;color:#1A1A2E;font-size:14px;font-weight:600}
+.chat-status{display:flex;justify-content:space-between;align-items:center;padding:34px 20px 4px;color:#1A1A2E;font-size:14px;font-weight:600}
 .chat-nav{display:flex;align-items:center;justify-content:space-between;padding:2px 14px 10px}
 .chat-nav-left{display:flex;align-items:center;gap:5px;cursor:pointer}
 .chat-nav-left span{font-size:16px;font-weight:700;color:#1A1A2E}
-.chat-nav-center{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-radius:16px;padding:3px 12px 3px 4px;cursor:pointer;position:relative}
+.chat-nav-center{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,.7);backdrop-filter:blur(10px);border-radius:16px;padding:3px 12px 3px 4px;cursor:pointer;position:relative;margin-left:auto;margin-right:6px}
 .chat-nav-center-avatar{width:22px;height:22px;border-radius:11px;background:linear-gradient(135deg,#E8D4F8,#D0C4F0);display:flex;align-items:center;justify-content:center;font-size:11px;position:relative}
 .chat-nav-center-badge{position:absolute;top:-5px;right:-5px;background:#FF4757;color:#fff;width:14px;height:14px;border-radius:7px;font-size:7px;font-weight:700;display:flex;align-items:center;justify-content:center;border:1.5px solid #fff}
 .chat-nav-center span{font-size:11px;font-weight:600;color:#1A1A2E}
@@ -593,6 +586,41 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .secret-input-top svg{flex-shrink:0}
 .secret-input-top span{font-size:11px;color:#B0B8C8;flex:1}
 .secret-send{width:30px;height:30px;border-radius:15px;background:linear-gradient(135deg,#3B7FFF,#1A6FE8);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+/* ========== 今日重点客户浮层 ========== */
+.overlay-bg{position:absolute;inset:0;background:rgba(0,0,0,.35);z-index:50;display:none;align-items:flex-end;justify-content:center}
+.overlay-bg.show{display:flex}
+.overlay-panel{width:100%;max-height:85%;background:#fff;border-radius:20px 20px 0 0;display:flex;flex-direction:column;animation:slideUp .35s cubic-bezier(.4,0,.2,1)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+
+.overlay-header{padding:16px 16px 0;flex-shrink:0}
+.overlay-title-row{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.overlay-title{font-size:16px;font-weight:700;color:#1A1A2E}
+.overlay-count{font-size:14px;font-weight:400;color:#8A95A8}
+.overlay-search{width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.overlay-close{width:22px;height:22px;display:flex;align-items:center;justify-content:center;cursor:pointer;margin-left:auto}
+
+.overlay-tabs{display:flex;gap:0;margin-bottom:4px}
+.overlay-tab{padding:8px 14px;font-size:13px;font-weight:500;color:#8A95A8;cursor:pointer;position:relative}
+.overlay-tab.act{color:#3B7FFF;font-weight:700}
+.overlay-tab.act::after{content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:20px;height:3px;background:#3B7FFF;border-radius:2px}
+
+.overlay-list{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:0 16px}
+.overlay-item{display:flex;align-items:center;gap:10px;padding:12px;margin-bottom:8px;border:1px solid #EFF1F5;border-radius:14px;background:#fff}
+.overlay-avatar{width:44px;height:44px;border-radius:22px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+.overlay-av1{background:linear-gradient(135deg,#D0E8FF,#A8C8F0)}
+.overlay-av2{background:linear-gradient(135deg,#FFE0C0,#FFB878)}
+.overlay-av3{background:linear-gradient(135deg,#C8E6C9,#A5D6A7)}
+.overlay-av4{background:linear-gradient(135deg,#E8D4F8,#D0B8F0)}
+.overlay-av5{background:linear-gradient(135deg,#FFD0D0,#FFB0B0)}
+.overlay-av6{background:linear-gradient(135deg,#D0D8F8,#B0C0E8)}
+.overlay-info{flex:1;min-width:0}
+.overlay-name{font-size:14px;font-weight:700;color:#1A1A2E;display:flex;align-items:center;gap:5px}
+.overlay-phone{width:16px;height:16px;border-radius:8px;background:#E8F8EE;display:flex;align-items:center;justify-content:center}
+.overlay-meta{font-size:10px;color:#8A95A8;margin-top:2px}
+.overlay-desc{font-size:10px;color:#5A6580;margin-top:2px}
+.overlay-action{flex-shrink:0;border:1.5px solid #3B7FFF;color:#3B7FFF;font-size:10px;font-weight:600;padding:5px 10px;border-radius:14px;cursor:pointer;white-space:nowrap}
+.overlay-plate{display:inline-block;font-size:9px;color:#5A6580;border:1px solid #D8E2F0;border-radius:4px;padding:1px 6px;margin-top:2px}
+.overlay-status{font-size:10px;font-weight:600;color:#3B7FFF;margin-top:2px}
 </style>
 </head>
 <body>
@@ -829,7 +857,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span>万能营销</span>
       </div>
-      <div class="chat-nav-center">
+      <div class="chat-nav-center" onclick="openOverlay()">
         <div class="chat-nav-center-avatar">👩‍💼<div class="chat-nav-center-badge">10</div></div>
         <span>今日重点客户</span>
       </div>
@@ -968,14 +996,11 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M15 19l-7-7 7-7" stroke="#1A1A2E" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
         <span>万能营销</span>
       </div>
-      <div class="chat-nav-center">
+      <div class="chat-nav-center" onclick="openOverlay()">
         <div class="chat-nav-center-avatar">👩‍💼<div class="chat-nav-center-badge">10</div></div>
         <span>今日重点客户</span>
       </div>
-      <div style="display:flex;align-items:center;gap:6px">
-        <div style="width:28px;height:28px;border-radius:14px;background:linear-gradient(135deg,#3B7FFF,#56B4FF);display:flex;align-items:center;justify-content:center"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="7" r="3.5" stroke="white" stroke-width="1.5"/><path d="M4 16c0-2.8 2.2-5 5-5s5 2.2 5 5" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg></div>
-        <div class="chat-nav-menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#1A1A2E" stroke-width="2.2" stroke-linecap="round"/></svg></div>
-      </div>
+      <div class="chat-nav-menu"><svg width="18" height="18" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M3 10h14M3 15h14" stroke="#1A1A2E" stroke-width="2.2" stroke-linecap="round"/></svg></div>
     </div>
     <!-- Messages -->
     <div class="secret-msgs">
@@ -1064,11 +1089,27 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
       <div class="secret-nav-inline">
         <span class="secret-nav-label">吴佩芝销售导航中</span>
         <div class="secret-nav-btns">
-          <div class="secret-nav-btn"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M14.5 6A6 6 0 003 9" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 12A6 6 0 0015 9" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M12.5 4l2 2 2-2" stroke="#8A95A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 14l-2-2-2 2" stroke="#8A95A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+          <div class="secret-nav-btn" onclick="openOverlay()"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M14.5 6A6 6 0 003 9" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M3.5 12A6 6 0 0015 9" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/><path d="M12.5 4l2 2 2-2" stroke="#8A95A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/><path d="M5.5 14l-2-2-2 2" stroke="#8A95A8" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
           <div class="secret-nav-btn"><svg width="14" height="14" viewBox="0 0 18 18" fill="none"><path d="M7 3H4a1 1 0 00-1 1v10a1 1 0 001 1h3" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M11 13l4-4-4-4" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 9H7" stroke="#8A95A8" stroke-width="1.5" stroke-linecap="round"/></svg></div>
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- ============ 今日重点客户浮层 ============ -->
+<div class="overlay-bg" id="customerOverlay" onclick="if(event.target===this)closeOverlay()">
+  <div class="overlay-panel">
+    <div class="overlay-header">
+      <div class="overlay-title-row">
+        <span class="overlay-title">今日重点客户</span>
+        <span class="overlay-count" id="overlayCount">(12)</span>
+        <div class="overlay-search"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="9" cy="9" r="5.5" stroke="#8A95A8" stroke-width="1.8"/><path d="M13.5 13.5L17 17" stroke="#8A95A8" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+        <div class="overlay-close" onclick="closeOverlay()"><svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M5 5l10 10M15 5L5 15" stroke="#8A95A8" stroke-width="2" stroke-linecap="round"/></svg></div>
+      </div>
+      <div class="overlay-tabs" id="overlayTabs"></div>
+    </div>
+    <div class="overlay-list" id="overlayList"></div>
   </div>
 </div>
 
@@ -1324,6 +1365,90 @@ function goToQuote(name){
   const intro=document.querySelector('#quotePage .quote-outer-intro');
   if(intro) intro.textContent='按去年方案及优选方案为'+name+'共生成两套报价方案，请参考';
   navigateTo('quotePage');
+}
+
+// ===== 今日重点客户浮层 =====
+const overlayData={
+  '车险续保':[
+    {name:'孙旭飞',avatar:'👨‍💼',avCls:'overlay-av1',plate:'陕A-G99U2',tag:'首日',renew:'多年续',lastYear:'¥1886.77',status:'已完成报价',action:'车险报价工具',type:'quote'},
+    {name:'李永胜',avatar:'👨‍💼',avCls:'overlay-av2',plate:'陕A-U36K6',tag:'首日',renew:'多年续',lastYear:'¥1180.35',status:'已完成报价',action:'车险报价工具',type:'quote'},
+    {name:'王昱山',avatar:'👩‍💼',avCls:'overlay-av3',plate:'陕A-T52M8',tag:'首日',renew:'多年续',lastYear:'¥965.00',status:'待报价',action:'手工报价',type:'quote'},
+    {name:'张三丰',avatar:'👨‍💼',avCls:'overlay-av4',plate:'陕A-K88P3',tag:'首日',renew:'多年续',lastYear:'¥1520.60',status:'待报价',action:'手工报价',type:'quote'},
+    {name:'刘丽丽',avatar:'👩‍🦱',avCls:'overlay-av5',plate:'陕A-H77N9',tag:'首日',renew:'多年续',lastYear:'¥2100.00',status:'已完成报价',action:'车险报价工具',type:'quote'},
+    {name:'邹潇潇',avatar:'👩',avCls:'overlay-av6',plate:'陕A-W23J5',tag:'首日',renew:'多年续',lastYear:'¥880.50',status:'待报价',action:'手工报价',type:'quote'}
+  ],
+  '非车潜客':[
+    {name:'王利雄',avatar:'👨‍💼',avCls:'overlay-av1',age:'35岁',tag:'A5已买多单',desc:'浏览健康类文章及健康险产品',action:'成交秘籍',type:'secret'},
+    {name:'杨明涛',avatar:'👨‍💼',avCls:'overlay-av2',age:'36岁',tag:'A5已买多单',desc:'新增15岁以下小孩，关注健康险',action:'成交秘籍',type:'secret'},
+    {name:'张园',avatar:'👩',avCls:'overlay-av5',age:'32岁',tag:'A1活跃客户',desc:'近30天领取了意外险赠险',action:'成交秘籍',type:'secret'}
+  ],
+  '寿险潜客':[
+    {name:'王小芳',avatar:'👩‍💼',avCls:'overlay-av4',age:'33岁',tag:'A5已买多单',desc:'多次咨询重疾险，购买意愿强',action:'成交秘籍',type:'secret'},
+    {name:'陈建国',avatar:'👨‍💼',avCls:'overlay-av3',age:'35岁',tag:'A5已买多单',desc:'刚添二胎，家庭保障需求大',action:'成交秘籍',type:'secret'},
+    {name:'刘思琪',avatar:'👩',avCls:'overlay-av6',age:'40岁',tag:'A1活跃客户',desc:'年收入50万+，保障意识强',action:'成交秘籍',type:'secret'}
+  ]
+};
+const overlayTabNames=Object.keys(overlayData);
+let curOverlayTab=0;
+const phoneSvgSmall='<svg width="8" height="8" viewBox="0 0 14 14" fill="none"><path d="M3 2a1 1 0 011-1h1.5a1 1 0 011 .8l.3 1.5a1 1 0 01-.5 1L5.5 5a7 7 0 003.5 3.5l.7-.8a1 1 0 011-.5l1.5.3a1 1 0 01.8 1V11a1 1 0 01-1 1A10 10 0 013 2z" fill="#4CAF50"/></svg>';
+const phoneSvgBlue='<svg width="16" height="16" viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="9" fill="#EBF3FF"/><path d="M7 6a.7.7 0 01.7-.7h1a.7.7 0 01.7.56l.2 1a.7.7 0 01-.35.7L9 8.2a5 5 0 002.5 2.5l.6-.5a.7.7 0 01.7-.35l1 .2a.7.7 0 01.56.7v1.05a.7.7 0 01-.7.7A7 7 0 017 6z" fill="#3B7FFF"/></svg>';
+
+function buildOverlay(){
+  const tabsEl=document.getElementById('overlayTabs');
+  tabsEl.innerHTML='';
+  overlayTabNames.forEach((t,i)=>{
+    const d=document.createElement('div');
+    d.className='overlay-tab'+(i===curOverlayTab?' act':'');
+    d.textContent=t;
+    d.onclick=()=>{curOverlayTab=i;buildOverlay()};
+    tabsEl.appendChild(d);
+  });
+  const list=document.getElementById('overlayList');
+  const tabName=overlayTabNames[curOverlayTab];
+  const items=overlayData[tabName]||[];
+  document.getElementById('overlayCount').textContent='('+items.length+')';
+  list.innerHTML='';
+  const isCar=tabName==='车险续保';
+  items.forEach((c)=>{
+    const div=document.createElement('div');div.className='overlay-item';
+    if(isCar){
+      div.innerHTML=`
+        <div class="overlay-avatar ${c.avCls}">${c.avatar}</div>
+        <div class="overlay-info">
+          <div class="overlay-name">${c.name}${phoneSvgBlue}</div>
+          <div class="overlay-plate">${c.plate}</div>
+          <div class="overlay-meta">${c.tag} | ${c.renew} | 上年 ${c.lastYear}</div>
+          <div class="overlay-status">${c.status}</div>
+        </div>
+        <div class="overlay-action" data-type="${c.type}" data-name="${c.name}">${c.action}</div>`;
+    }else{
+      div.innerHTML=`
+        <div class="overlay-avatar ${c.avCls}">${c.avatar}</div>
+        <div class="overlay-info">
+          <div class="overlay-name">${c.name}${phoneSvgBlue}</div>
+          <div class="overlay-meta">${c.age} | ${c.tag}</div>
+          <div class="overlay-desc" style="font-weight:600;color:#1A1A2E;margin-top:3px">${c.desc}</div>
+        </div>
+        <div class="overlay-action" data-type="${c.type}" data-name="${c.name}">${c.action}</div>`;
+    }
+    div.querySelector('.overlay-action').onclick=function(){
+      closeOverlay();
+      if(this.dataset.type==='quote'){
+        goToQuote(this.dataset.name);
+      }else{
+        navigateTo('secretPage');
+      }
+    };
+    list.appendChild(div);
+  });
+}
+
+function openOverlay(){
+  buildOverlay();
+  document.getElementById('customerOverlay').classList.add('show');
+}
+function closeOverlay(){
+  document.getElementById('customerOverlay').classList.remove('show');
 }
 </script>
 </body>
