@@ -1446,28 +1446,30 @@ function toggleChatBranch(){
   // Navigate to chat page
   navigateTo('chatPage');
 
-  // Get target: the "今日重点客户" bubble, relative to phone-screen
-  const target=document.querySelector('#chatPage .chat-nav-center');
-  const tRect=target.getBoundingClientRect();
-  const tx=tRect.left-cRect.left+tRect.width/2;
-  const ty=tRect.top-cRect.top+tRect.height/2;
+  // Wait for page transition to finish (350ms) before measuring target position
+  setTimeout(()=>{
+    const target=document.querySelector('#chatPage .chat-nav-center');
+    const tRect=target.getBoundingClientRect();
+    const tx=tRect.left-cRect.left+tRect.width/2;
+    const ty=tRect.top-cRect.top+tRect.height/2;
 
-  // Fly cards with staggered delay — smooth gather effect
-  cardClones.forEach((clone,i)=>{
-    setTimeout(()=>{
-      clone.style.left=tx+'px';
-      clone.style.top=ty+'px';
-      clone.classList.add('flying');
-      // Pulse the target bubble on arrival
+    // Fly cards with staggered delay — smooth gather effect
+    cardClones.forEach((clone,i)=>{
       setTimeout(()=>{
-        target.classList.remove('bubble-pulse');
-        void target.offsetWidth;
-        target.classList.add('bubble-pulse');
-      },600);
-      // Remove clone after animation
-      setTimeout(()=>clone.remove(),800);
-    },i*120);
-  });
+        clone.style.left=tx+'px';
+        clone.style.top=ty+'px';
+        clone.classList.add('flying');
+        // Pulse the target bubble on arrival
+        setTimeout(()=>{
+          target.classList.remove('bubble-pulse');
+          void target.offsetWidth;
+          target.classList.add('bubble-pulse');
+        },600);
+        // Remove clone after animation
+        setTimeout(()=>clone.remove(),800);
+      },i*120);
+    });
+  },380);
 }
 
 // ===== 车险报价页: Card click navigates with customer name =====
