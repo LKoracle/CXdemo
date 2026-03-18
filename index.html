@@ -203,14 +203,14 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
   pointer-events:none;
 }
 .h-fixed-top.scrolled .h-header::after{opacity:1}
-.h-search-row{display:flex;align-items:center;gap:8px;padding-bottom:10px}
+.h-search-row{display:flex;align-items:center;gap:8px;padding-bottom:10px;flex-wrap:nowrap}
 .h-avatar{width:44px;height:44px;border-radius:22px;background:rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;overflow:hidden}
 .h-avatar img{width:100%;height:100%;object-fit:cover;border-radius:22px}
 .h-avatar-badge{position:absolute;bottom:-2px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.55);color:#fff;font-size:7px;padding:1px 5px;border-radius:4px;white-space:nowrap;line-height:10px;z-index:1}
-.h-searchbar{flex:1;background:#fff;border-radius:20px;display:flex;align-items:center;padding:7px 12px;gap:6px}
+.h-searchbar{flex:1;min-width:0;background:#fff;border-radius:20px;display:flex;align-items:center;padding:7px 12px;gap:6px;overflow:hidden}
 .h-searchbar span{color:#B0B8C8;font-size:13px;flex:1}
 .h-search-ai{width:24px;height:24px;border-radius:12px;background:linear-gradient(135deg,#67C3F3,#5B86E5);display:flex;align-items:center;justify-content:center}
-.h-icons{display:flex;gap:6px;align-items:center}
+.h-icons{display:flex;gap:6px;align-items:center;flex-shrink:0}
 .h-icon{width:30px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
 .h-icon-dot{position:absolute;top:2px;right:2px;width:7px;height:7px;border-radius:50%;background:#FF4757;border:1.5px solid #357ABD}
 .h-marketing-btn{background:linear-gradient(135deg,#00D2FF 0%,#3B7FFF 50%,#7C3AED 100%);backdrop-filter:blur(8px);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;display:flex;align-items:center;border:1px solid rgba(255,255,255,.45);box-shadow:0 2px 8px rgba(59,127,255,.45),0 4px 16px rgba(124,58,237,.3),inset 0 1px 1px rgba(255,255,255,.4);text-shadow:0 1px 3px rgba(0,0,0,.3);letter-spacing:.5px;position:relative;overflow:hidden;animation:mktBtnPulse 2.5s ease-in-out infinite}
