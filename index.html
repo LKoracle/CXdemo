@@ -213,7 +213,10 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .h-icons{display:flex;gap:6px;align-items:center}
 .h-icon{width:30px;height:30px;border-radius:15px;display:flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
 .h-icon-dot{position:absolute;top:2px;right:2px;width:7px;height:7px;border-radius:50%;background:#FF4757;border:1.5px solid #357ABD}
-.h-marketing-btn{background:rgba(255,255,255,.25);backdrop-filter:blur(8px);border-radius:16px;padding:5px 12px;font-size:12px;font-weight:700;color:#fff;cursor:pointer;white-space:nowrap;display:flex;align-items:center;border:1px solid rgba(255,255,255,.3)}
+.h-marketing-btn{background:linear-gradient(135deg,#00D2FF 0%,#3B7FFF 50%,#7C3AED 100%);backdrop-filter:blur(8px);border-radius:20px;padding:6px 14px;font-size:12px;font-weight:800;color:#fff;cursor:pointer;white-space:nowrap;display:flex;align-items:center;border:1px solid rgba(255,255,255,.45);box-shadow:0 2px 8px rgba(59,127,255,.45),0 4px 16px rgba(124,58,237,.3),inset 0 1px 1px rgba(255,255,255,.4);text-shadow:0 1px 3px rgba(0,0,0,.3);letter-spacing:.5px;position:relative;overflow:hidden;animation:mktBtnPulse 2.5s ease-in-out infinite}
+.h-marketing-btn::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:linear-gradient(45deg,transparent 30%,rgba(255,255,255,.15) 50%,transparent 70%);animation:mktBtnShine 3s ease-in-out infinite}
+@keyframes mktBtnShine{0%,100%{transform:translateX(-100%) rotate(45deg)}50%{transform:translateX(100%) rotate(45deg)}}
+@keyframes mktBtnPulse{0%,100%{box-shadow:0 2px 8px rgba(59,127,255,.45),0 4px 16px rgba(124,58,237,.3),inset 0 1px 1px rgba(255,255,255,.4)}50%{box-shadow:0 2px 12px rgba(59,127,255,.6),0 4px 20px rgba(124,58,237,.45),inset 0 1px 1px rgba(255,255,255,.4)}}
 .h-qnav{display:flex;justify-content:space-around;padding:12px 6px 16px;background:linear-gradient(180deg,#357ABD 0%,#4A90E2 40%,#F5F6FA 100%)}
 .h-qnav-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer}
 .h-qnav-icon{width:42px;height:42px;border-radius:12px;background:rgba(255,255,255,.95);display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.08)}
@@ -668,7 +671,7 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
           <div class="h-icons">
             <div class="h-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><path d="M11 3a5.5 5.5 0 015.5 5.5v3l2 2.5H3.5l2-2.5v-3A5.5 5.5 0 0111 3z" stroke="white" stroke-width="1.5"/><path d="M8.5 16a2.5 2.5 0 005 0" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg><div class="h-icon-dot"></div></div>
             <div class="h-icon"><svg width="18" height="18" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="8.5" stroke="white" stroke-width="1.5"/><text x="11" y="14.5" text-anchor="middle" fill="white" font-size="8" font-weight="700">IM</text></svg></div>
-            <div class="h-marketing-btn" onclick="navigateTo('aiPage')">万能营销</div>
+            <div class="h-marketing-btn" onclick="navigateTo('aiPage')"><svg width="14" height="14" viewBox="0 0 20 20" fill="none" style="margin-right:4px"><path d="M10 2l2 4h4l-3 3 1 4-4-2.5L6 13l1-4-3-3h4z" fill="white" fill-opacity=".9"/></svg>万能营销</div>
           </div>
         </div>
       </div>
