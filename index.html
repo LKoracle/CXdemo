@@ -366,8 +366,8 @@ body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellips
 .sw-dot.act{width:16px;background:#3B7FFF}
 
 /* Card fly animation */
-.fly-card{position:fixed;z-index:9999;background:#fff;border-radius:12px;padding:10px;box-shadow:0 6px 20px rgba(59,127,255,.25);display:flex;flex-direction:column;pointer-events:none;transition:all .6s cubic-bezier(.34,1.56,.64,1);opacity:1}
-.fly-card.flying{transform:scale(.15)!important;opacity:0}
+.fly-card{position:absolute;z-index:9999;background:#fff;border-radius:12px;padding:10px;box-shadow:0 6px 20px rgba(59,127,255,.25);display:flex;flex-direction:column;pointer-events:none;transition:left .7s cubic-bezier(.4,0,.2,1),top .7s cubic-bezier(.4,0,.2,1),transform .7s cubic-bezier(.4,0,.2,1),opacity .5s ease .2s;opacity:1}
+.fly-card.flying{transform:scale(.1) !important;opacity:0}
 @keyframes bubblePulse{0%{transform:scale(1)}50%{transform:scale(1.15)}100%{transform:scale(1)}}
 .bubble-pulse{animation:bubblePulse .35s ease}
 
@@ -1423,7 +1423,9 @@ function toggleChatBranch(){
   loadChatPage(branches[chatClickCount % branches.length]);
   chatClickCount++;
 
-  // Collect card positions before navigating
+  // Collect card positions relative to phone-screen container
+  const container=document.querySelector('.phone-screen');
+  const cRect=container.getBoundingClientRect();
   const cardEls=document.querySelectorAll('#aiPage .card-slide .cc');
   const cardClones=[];
   cardEls.forEach(card=>{
@@ -1432,25 +1434,25 @@ function toggleChatBranch(){
     clone.className='fly-card';
     clone.style.width=rect.width+'px';
     clone.style.height=rect.height+'px';
-    clone.style.left=rect.left+'px';
-    clone.style.top=rect.top+'px';
+    clone.style.left=(rect.left-cRect.left)+'px';
+    clone.style.top=(rect.top-cRect.top)+'px';
     // preserve original rotation
     const cs=getComputedStyle(card);
     clone.style.transform=cs.transform&&cs.transform!=='none'?cs.transform:'';
-    document.body.appendChild(clone);
+    container.appendChild(clone);
     cardClones.push(clone);
   });
 
   // Navigate to chat page
   navigateTo('chatPage');
 
-  // Get target: the "今日重点客户" bubble
+  // Get target: the "今日重点客户" bubble, relative to phone-screen
   const target=document.querySelector('#chatPage .chat-nav-center');
   const tRect=target.getBoundingClientRect();
-  const tx=tRect.left+tRect.width/2;
-  const ty=tRect.top+tRect.height/2;
+  const tx=tRect.left-cRect.left+tRect.width/2;
+  const ty=tRect.top-cRect.top+tRect.height/2;
 
-  // Fly cards one by one with staggered delay
+  // Fly cards with staggered delay — smooth gather effect
   cardClones.forEach((clone,i)=>{
     setTimeout(()=>{
       clone.style.left=tx+'px';
@@ -1461,11 +1463,10 @@ function toggleChatBranch(){
         target.classList.remove('bubble-pulse');
         void target.offsetWidth;
         target.classList.add('bubble-pulse');
-      },500);
+      },600);
       // Remove clone after animation
-      setTimeout(()=>clone.remove(),700);
-    },i*200);
-  });
+      setTimeout(()=>clone.remove(),800);
+    },i*120);
 }
 
 // ===== 车险报价页: Card click navigates with customer name =====
